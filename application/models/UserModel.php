@@ -189,4 +189,52 @@ class UserModel extends CI_model
 					);
 		return $data;
 	}
+
+	public function getOrders($user)
+	{
+		$this->db->where("username",$user);
+		$users = $this->db->get("users")->row();
+
+		$this->db->where("user_id",$users->user_id);
+		$gtOrd = $this->db->get("orders");
+		if($gtOrd->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gtOrd->result();
+			foreach ($res as $keyOrd) {
+				
+				$this->db->where("id",$keyOrd->product_id);
+				$gtPro = $this->db->get("cards");
+				$key = $gtPro->row();
+				$dt = $key->date;
+				$dts = date_create($dt);
+				$date = date_format($dts,'d-m-Y');
+				$data[] = array
+								(
+									"id"		=>$key->id,
+									"date"		=>$date,
+									"numbers"	=>$key->card_no,
+									"name"		=>$key->name,
+									"exp"		=>$key->exp,
+									"cvv"		=>$key->cvv,
+									"type"		=>$key->type,
+									"brand"		=>$key->card_name,
+									"bank"		=>$key->bank,
+									"address"	=>$key->address,
+									"seller"	=>$key->seller,
+									"base"		=>$key->base,
+									"price"		=>$key->price,
+									"cntr_cd"	=>strtolower($key->country_code),
+									"currency"	=>$keyOrd->currency,
+									"buyPrice"	=>$keyOrd->price
+									
+								);
+			}
+		}
+
+		return $data;
+	}
 }
