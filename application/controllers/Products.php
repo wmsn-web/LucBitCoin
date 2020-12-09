@@ -211,4 +211,15 @@ class Products extends CI_Controller {
 		}
 
 	}
+
+	public function ChangeCardPrice()
+	{
+		$id = $this->input->post("id");
+		$price = $this->input->post("price");
+		$this->db->where("id",$id);
+		$this->db->update("cards",["price"=>$price]);
+		$this->session->set_flashdata("Feed","Price Updated Successfully");
+		return redirect('Products/index/Card');
+	}
+
 }

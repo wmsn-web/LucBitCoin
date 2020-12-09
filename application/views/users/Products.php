@@ -83,6 +83,7 @@
                               $cryp = number_format($cryps,9);
                             }
                             
+
                           ?>
 
                           <tr>
@@ -100,9 +101,13 @@
                               <span class="text-primary"><?= $icn; ?> <?= $cryp; ?></span>
                             </td>
                             <td style="text-align: center; width: 10%">
-                              <div id="mssg_<?= $sl; ?>">
-                                <button onclick="buys('<?= $row->crypto_select; ?>_<?= $cryp; ?>_<?= $row->user_id; ?>_<?= $sl; ?>_<?= $pro['id']; ?>')" class="btnSmall">Buy Card</button>
-                              </div>
+                              <?php if($this->session->userdata("userName")==$pro['seller']): ?>
+                                <button  data-toggle="modal" data-target="#chPrice" class="btnSmall" onclick="chpricee('<?= $pro['id']; ?>_<?= $pro['price']; ?>')">Change Price</button>
+                                <?php else: ?>
+                                <div id="mssg_<?= $sl; ?>">
+                                  <button onclick="buys('<?= $row->crypto_select; ?>_<?= $cryp; ?>_<?= $row->user_id; ?>_<?= $sl; ?>_<?= $pro['id']; ?>')" class="btnSmall">Buy Card</button>
+                                </div>
+                              <?php endif; ?>
                             </td>
                           </tr>
                         <?php endforeach; ?>
@@ -118,6 +123,10 @@
     </section>
     <!-- /.content -->
   </div>
+  <?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="flashd"><?= $feed; ?></div>
+  <?php endif; ?>
+  <?php include("inc/ModalSection.php"); ?>
   <?php include('inc/footer.php'); ?>
   </div>
   <?php include('inc/table_js.php'); ?>
@@ -201,6 +210,15 @@
             }
           }
         )
+    }
+
+    function chpricee(values)
+    {
+      spl = values.split("_");
+      cardId = spl[0];
+      price = spl[1];
+      $("#cardId").val(cardId);
+      $("#prices").val(price);
     }
   </script>
 </body>
