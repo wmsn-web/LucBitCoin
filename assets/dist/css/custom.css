@@ -1,0 +1,209 @@
+.flashd
+{
+	position: absolute;
+	right: 10px;
+	top:65px;
+	z-index: 999;
+	padding: 2px 20px;
+	background: rgba(0,0,0,0.65);
+	width: 350px;
+	color: #fff;
+}
+.lodd
+{
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left:0;
+	padding: 0;
+	margin:0;
+	display: none;
+}
+.lodd i
+{
+	margin:15%;
+	font-size: 42px;
+	color: #00B9FF;
+}
+
+.lodd p
+{
+	font-weight: bold;
+	color: #0061FF;
+}
+.sp1{
+	color: #FF7C00;
+}
+.sp1 b
+{
+	color: #878787;
+}
+.sp2{
+	color: #00B045 ;
+}
+.sp2 b
+{
+	color: #878787;
+}
+.sm-right
+{
+	float: right;
+	width: 100%;
+	text-align: right;
+}
+.unsed
+{
+	padding: 6px;
+}
+.inuse
+{
+	padding: 6px;
+	border:dashed 1px #ccc;
+}
+.ruleUl li
+{
+	list-style-type: none;
+	padding: 4px;
+	color: #868686;
+
+}
+.ruleUl li span.sl
+{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	padding: 2px;
+	line-height: 30px;
+	font-weight: bold;
+	background: #FF7400;
+	color: #fff;
+}
+.smallInput
+{
+	border:solid 1px #ccc;
+	padding: 4px 20px;
+	font-size: 14px;
+	text-align: center;
+}
+.smallInput option
+{
+	color: #000;
+}
+.smallInput option:first-child
+{
+	color: #ccc;
+}
+.format-notice
+{
+	padding: 8px;
+	border:solid 1px #11BE00;
+	background: #E0FFDD;
+	color: #0B7101;
+	margin-bottom: 15px;
+	display: none;
+}
+.format-notice p
+{
+	font-size: 12px;
+}
+#cards{display: none;}
+#dumps{display: none;}
+.format-notice span
+{
+	color: #E84300;
+}
+.message
+{
+	padding: 4px;
+	font-size: 13px;
+}
+.message-danger
+{
+	border:solid 1px #f00;
+	color:#f00;
+	background: #FFEEEA;
+}
+.message-success
+{
+	border:solid 1px #090;
+	color:#090;
+	background: #F1FFEA;
+}
+.tble
+{
+	width:100%;
+}
+.tble th
+{
+	padding: 4px;
+	text-align: center;
+	font-size: 14px;
+
+}
+.tble-bordered  th
+{
+	padding: 4px;
+	text-align: center;
+	font-size: 14px;
+	border: solid 1px #E0E0E0;
+}
+.tble-bordered td
+{
+	text-align: center;
+	font-size: 13px;
+	padding: 4px;
+	border: solid 1px #E0E0E0;
+	word-wrap: break-word;
+}
+.btnSmall
+{
+	padding: 3px 15px;
+	text-align: center;
+	border: solid 1px #909090;
+	background: #F9F9F9;
+	color: #909090;
+}
+.addrDiv
+{
+	padding: 15px;
+	width: 320px;
+	position: absolute;
+	z-index: 999;
+	background: #000;
+	right: 15px;
+	border:solid 2px #000;
+	display: none;
+}
+.sqBox
+{
+	width: 15px;
+	height: 15px;
+	border:solid 2px #000;
+	position: absolute;
+	margin-top: -8px;
+	transform: rotate(45deg);
+	background: #000;
+	display: none;
+}
+.addrDiv label
+{
+	font-size: 10px;
+	color: #fff;
+}
+.addrDiv span
+{
+	font-size: 12px;
+	padding: 5px;
+	border: solid 1px #fff;
+	color: #fff;
+}
+@media (max-width: 991px) 
+{
+	.lodd i
+		{
+			margin-top:85%;
+			font-size: 62px;
+		}
+}
