@@ -51,14 +51,30 @@
                   <p>All Users</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="<?= base_url('Admin/All-Vendors'); ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Vendors</p>
-                </a>
-              </li>
               
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('Admin/Products'); ?>" <?php if($uri=="Products"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+              <i class="nav-icon fas fa-cube"></i>
+              <p>
+                Products
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('Admin/Withdraw-Request'); ?>" <?php if($uri=="Withdraw-Request"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+              <i class="nav-icon fas fa-cube"></i>
+              <p>
+                Withdraw Request
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            
           </li>
           <li <?php if($uri == "Set-Rules"){ echo 'class="nav-item has-treeview menu-open"'; }else{ echo 'class="nav-item has-treeview"'; } ?>>
             <a href="#" <?php if($uri == "Set-Rules"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
@@ -75,7 +91,12 @@
                   <p>Set Rules</p>
                 </a>
               </li>
-              
+              <li class="nav-item">
+                <a href="<?= base_url('Admin/Other-Settings'); ?>" <?php if($uri == "Other-Settings"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Other Settings</p>
+                </a>
+              </li>
             </ul>
           </li>
           

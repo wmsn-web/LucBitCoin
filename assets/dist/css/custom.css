@@ -1,3 +1,51 @@
+.cp
+{
+	cursor: pointer !important;
+}
+.wdrq
+{
+	border-left: solid 1px #ccc;
+	height: 220px;
+	overflow: scroll;
+	padding: 15px;
+}
+
+.wdrq::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.wdrq {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.wdrq ul
+{
+	padding: 0;
+	margin: 0;
+}
+.wdrq ul li
+{
+	list-style-type: none;
+	padding: 5px;
+	border: solid 1px #F2F2F2;
+	margin-bottom: 10px;
+	
+}
+.wdrq ul li.suc_shadow
+{
+	box-shadow: 2px 2px 8px #E1FFD9;
+}
+.wdrq ul li.dan_shadow
+{
+	box-shadow: 2px 2px 8px #FFE4D9;
+}
+.wdrq ul li.wrn_shadow
+{
+	box-shadow: 2px 2px 8px #FFF1D9;
+}
+.italic-text{font-style: italic;}
 .flashd
 {
 	position: absolute;
@@ -164,6 +212,22 @@
 	border: solid 1px #909090;
 	background: #F9F9F9;
 	color: #909090;
+}
+
+.btnSmall-danger
+{
+	background: #f00;
+	color: #FFF;
+}
+.btnSmall-primary
+{
+	background: #0065F7;
+	color: #FFF;
+}
+.btnSmall-warning
+{
+	background: #F79D00;
+	color: #FFF;
 }
 .addrDiv
 {

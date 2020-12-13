@@ -21,14 +21,16 @@ class Seller extends CI_Controller {
 		$gtTransactions = $this->UserModel->gtTransactions($seller);
 		$earning = $this->UserModel->earning($seller);
 		$getUserDetails = $this->UserModel->getUserDetails($seller);
+		$getWithdrawRequests = $this->UserModel->getWithdrawRequests($seller);
 		//print_r($getSaleCards);
-		$this->load->view("users/Seller",["base"=>$basenames,"saleData"=>$getSaleCards,"trData"=>$gtTransactions,"earning"=>$earning,"userDatas"=>$getUserDetails]);
+		$this->load->view("users/Seller",["base"=>$basenames,"saleData"=>$getSaleCards,"trData"=>$gtTransactions,"earning"=>$earning,"userDatas"=>$getUserDetails,"rqData"=>$getWithdrawRequests]);
 		/*
 			$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc=5157359818590564');
 			$response = json_decode($response);
 			print_r($response);
 
 			*/
+			//print_r($getWithdrawRequests);
 		
 	}
 
@@ -143,6 +145,26 @@ class Seller extends CI_Controller {
 		$setAddress = $this->UserModel->setWithdrawAddress($withdrawBtc,$withdrawEth,$username);
 		$this->session->set_flashdata("Feed","Withdraw Address Updated Successfully");
 		return redirect("Seller");
+	}
+
+	public function SendWthdrRequest()
+	{
+		$username = $this->input->post("user");
+		$currency = $this->input->post("currency");
+		$rqAmt = $this->input->post("rqAmt");
+		$sentWithdraw = $this->UserModel->sentWithdraw($username,$currency,$rqAmt);
+		if($sentWithdraw =="nobal")
+		{
+			echo "No Balance Available";
+		}
+		elseif($sentWithdraw =="invbal")
+		{
+			echo "Insufficient Balance";
+		}
+		else
+		{
+			echo "Request has been sent Successfully";
+		}
 	}
 
 

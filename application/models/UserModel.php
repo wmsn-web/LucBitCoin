@@ -237,4 +237,73 @@ class UserModel extends CI_model
 
 		return $data;
 	}
+
+	public function sentWithdraw($username,$currency,$rqAmt)
+	{
+		$this->db->where("username",$username);
+		$users = $this->db->get("users")->row();
+		$this->db->where("user_id",$users->user_id);
+		$gtWllt = $this->db->get("user_wallet");
+		$gtaddr = "withdraw_".$currency;
+		if($gtWllt->num_rows()==0)
+		{
+			$return = "nobal";
+		}
+		else
+		{
+			$wlbal = $gtWllt->row()->$currency;
+			if($rqAmt > $wlbal)
+			{
+				$return = "invbal";
+			}
+			else
+			{
+				$addr = $users->$gtaddr;
+				$wthdrData = array
+								(
+									"user_id"		=>$users->user_id,
+									"currency"		=>$currency,
+									"address"		=>$addr,
+									"amount"		=>$rqAmt,
+									"status"		=>0,
+									"date"			=>date('Y-m-d')
+								);
+				$nowBal = $wlbal-$rqAmt;
+				$this->db->insert("withdraw_request",$wthdrData);
+				$this->db->where("user_id",$users->user_id);
+				$this->db->update("user_wallet",[$currency=>$nowBal]);
+				$return = "ok";
+			}
+		}
+
+		return $return;
+	}
+
+	public function getWithdrawRequests($user)
+	{
+		$this->db->where("username",$user);
+		$users = $this->db->get("users")->row();
+		$this->db->where("user_id",$users->user_id);
+		$get = $this->db->get("withdraw_request");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key) {
+				$data[] = array
+								(
+									"user_id"	=>$key->user_id,
+									"currency"	=>$key->currency,
+									"amount"	=>$key->amount,
+									"date"		=>$key->date,
+									"status"	=>$key->status
+								);
+			}
+		}
+
+		return $data;
+	}
 }

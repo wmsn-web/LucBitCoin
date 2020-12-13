@@ -1,4 +1,4 @@
-<?php $uri = $this->uri->segment(2); ?>
+<?php $uri = $this->uri->segment(1); ?>
 <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url(); ?>" class="brand-link">
@@ -25,17 +25,17 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="<?= base_url(); ?>" class="nav-link">
+            <a href="<?= base_url(); ?>" <?php if($uri==""): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                Dashboard 
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             
           </li>
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Rules'); ?>" class="nav-link">
+            <a href="<?= base_url('Rules'); ?>" <?php if($uri=="Rules"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-hammer"></i>
               <p>
                 Rules
@@ -45,7 +45,7 @@
             
           </li>
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Products/index/Card'); ?>" class="nav-link">
+            <a href="<?= base_url('Products/index/Card'); ?>" <?php if($uri=="Products"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-cube"></i>
               <p>
                 Products
@@ -55,7 +55,7 @@
           </li>
 
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Orders'); ?>" class="nav-link">
+            <a href="<?= base_url('Orders'); ?>" <?php if($uri=="Orders"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-layer-group"></i>
               <p>
                 Orders
@@ -64,7 +64,7 @@
             </a>            
           </li>
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Rules'); ?>" class="nav-link">
+            <a href="<?= base_url('Rules'); ?>" <?php if($uri=="Checker"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-check"></i>
               <p>
                 Checker
@@ -72,18 +72,10 @@
               </p>
             </a>            
           </li>
-          <li class="nav-item has-treeview">
-            <a href="<?= base_url('Rules'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-layer-group"></i>
-              <p>
-                Raffle
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>            
-          </li>
+          
           
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Seller'); ?>" class="nav-link">
+            <a href="<?= base_url('Seller'); ?>"  <?php if($uri=="Seller"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Seller

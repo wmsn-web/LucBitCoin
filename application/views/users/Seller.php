@@ -145,15 +145,16 @@
                           <form action="<?= base_url('Seller/updateWithdrawAddress'); ?>" method="post">
                             <div class="form-group">
                               <label>Bitcoin(BTC):</label>
-                              <input type="text" name="withdrawBtc" class="form-control" placeholder="Bitcoin Address" value="<?= $userDatas['withdraw_btc']; ?>">
+                              <input type="text" id="wdBtc" name="withdrawBtc" class="form-control" placeholder="Bitcoin Address" value="<?= $userDatas['withdraw_btc']; ?>">
                             </div>
                             <div class="form-group">
                               <label>Ethereum(ETH):</label>
-                              <input type="text" name="withdrawEth" class="form-control" placeholder="Ethereum Address" value="<?= $userDatas['withdraw_eth']; ?>">
+                              <input type="text" id="wdEth" name="withdrawEth" class="form-control" placeholder="Ethereum Address" value="<?= $userDatas['withdraw_eth']; ?>">
                             </div>
                             <input type="hidden" name="username" value="<?= $this->session->userdata('userName'); ?>">
                             <div class="form-group">
                               <button class="btn btn-primary">Save</button>
+                              <span data-toggle="modal" data-target="#wthdrawReq" class="text-primary cp wd">Request Withdraw</span>
                             </div>
                           </form>
                        </div>
@@ -211,6 +212,7 @@
   <?php if($feed = $this->session->flashdata("Feed")): ?>
     <div class="flashd"><?= $feed; ?></div>
   <?php endif; ?>
+  <?php include("inc/AllModal.php"); ?>
   <?php include('inc/footer.php'); ?>
   </div>
   <?php include('inc/table_js.php'); ?>
@@ -383,6 +385,41 @@
             }
           )
       });
+      $("#reqst").click(function(){
+        currency = $('input[name="currency"]:checked').val();
+        user = "<?= $this->session->userdata('userName'); ?>";
+        rqAmt = $("#rqAmt").val();
+        if(rqAmt =="")
+        {
+          alert("Enter Amount");
+          $("#rqAmt").focus();
+        }
+        else
+        {
+          $.post("<?= base_url('Seller/SendWthdrRequest'); ?>",
+              {
+                currency: currency,
+                user: user,
+                rqAmt: rqAmt
+              },
+              function(data)
+              {
+                alert(data);
+                location.href="";
+              }
+            )
+        }
+      });
+      $(".wd").click(function(){
+          wdEth = $("#wdEth").val();
+          wdBtc = $("#wdBtc").val();
+          if(wdBtc == "" | wdEth=="")
+          {
+            alert("Please Add Withdraw BTC & ETH Address");
+            location.href="";
+
+          }
+      })
     });
   </script>
   

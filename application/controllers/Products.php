@@ -170,6 +170,7 @@ class Products extends CI_Controller {
 									(
 										"user_id"			=>$sellerId,
 										"notes"				=>"Bin- (".$bin.") Sold",
+										"currency"			=>$curency,
 										"tr_type"			=>"earning",
 										"credit"			=>$sellerPrice,
 										"date"				=>date('Y-m-d')
