@@ -181,6 +181,7 @@
     });
     function buys(values)
     {
+      if (!confirm('Are you sure? Proceed to buy?')) return false;
       spl = values.split("_");
       curecy = spl[0];
       price = spl[1];
@@ -200,7 +201,7 @@
             }
             else
             {
-              $.post("<?= base_url('Products/PurchaseCard'); ?>",
+              $.post("<?= base_url('Products/PurchaseCard'); ?>", 
                   {
                     user_id: spl[2],
                     price: price,
@@ -211,6 +212,7 @@
                   {
                     if(data == "succ")
                     {
+                      alert("You have successfully bought this card. get your card details in order Section");
                       location.href = "";
                     }
                     else

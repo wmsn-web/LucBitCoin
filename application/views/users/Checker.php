@@ -35,10 +35,25 @@
          <div class="col-md-12">
            <div class="card">
              <div class="card-body">
-               <div class="row">
-                 <div class="form-group col-sm-3">
-                   <input type="text" name="" class="form-control" placeholder="Card Number">
-                 </div>
+               <div class="row justify-content-left">
+                <div class="col-md-10">
+                  <table>
+                    <tr>
+                      <td><input type="text" name="" class="form-controlm" id="ccn" placeholder="Card Number"></td>
+                      <td>
+                        <input type="number" name="" class="floatInput" id="mnth" placeholder="Month">
+                        <input type="number" name="" class="floatInput" id="yr" placeholder="Year">
+                      </td>
+                      <td><input type="number" name="" class="form-controlm" id="cvv" placeholder="CVV"></td>
+                      
+                      <td><button id="chk" class="btnSmall">Check</button></td>
+                    </tr>
+                  </table>
+                </div>
+                 
+                  <div class="form-group col-sm-12">
+                    <div id="result"></div>
+                  </div>
                </div>
              </div>
            </div>
@@ -76,6 +91,32 @@
             }
           )
       });
+      $("#chk").click(function(){
+        ccn = $("#ccn").val();
+        mnth = $("#mnth").val();
+        yr = $("#yr").val();
+        cvv = $("#cvv").val();
+        user = "<?= $this->session->userdata('userName'); ?>";
+
+        if(ccn =="" || mnth =="" || yr =="" || cvv =="" )
+        {
+          $("#result").html("<b class='text-danger'>Invalid Input!</b>");
+        }
+        else
+        {
+          $.post("<?= base_url('Checker/CheckCard'); ?>",
+              {
+                user: user,
+                ccn: ccn
+              },
+              function(response)
+              {
+                $("#result").html(response);
+              }
+            )
+          
+        }
+      })
 </script>
 </body>
 </html>
