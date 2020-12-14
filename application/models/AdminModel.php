@@ -188,7 +188,9 @@ class AdminModel extends CI_model
 						"SaleCharg"	=>$get->sale_charge,
 						"btcRate"	=>$get->btc_rate,
 						"ethRate"	=>$get->eth_rate,
-						"refer_reward"=>$get->refer_reward
+						"refer_reward"=>$get->refer_reward,
+						"checker_price_btc"=>$get->checker_price_btc,
+						"checker_price_eth"=>$get->checker_price_eth
 					);
 		return $data;
 	}
