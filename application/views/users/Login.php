@@ -66,6 +66,14 @@
               </div>
             </div>
           </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="PrntrefCode" placeholder="Referral Code" required="required">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <i class="fas fa-award"></i>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-6">
@@ -112,6 +120,7 @@
           pass = $("#password").val();
           conpass = $("#conpass").val();
           security = $("#scPin").val();
+          PrntrefCode = $("#PrntrefCode").val();
         if(user == "" || pass == "" || conpass == "" || security == "")
         {
             $("#snup").show();
@@ -131,7 +140,8 @@
                       {
                           user: user,
                           pass: pass,
-                          security: security
+                          security: security,
+                          parentCode: PrntrefCode
                       },
                       function(resposne,status)
                       {
@@ -142,9 +152,17 @@
                                 window.location.href = "<?= base_url(); ?>";
                               }, 5000);
                           }
+                          else if(resposne == "inv")
+                          {
+                            $("#errMsg").html("<i class='fas fa-exclamation-triangle'></i> Invalid Refferal Code");
+                            $(".card").css("opacity",1);
+                            $(".lodd").hide();
+                          }
                           else
                           {
                               $("#errMsg").html("<i class='fas fa-exclamation-triangle'></i> User Already Exist!");
+                              $(".card").css("opacity",1);
+                              $(".lodd").hide();
                           }
                       }
                   )

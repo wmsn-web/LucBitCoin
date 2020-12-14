@@ -8,6 +8,7 @@ class Products extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model("UserModel");
+		$this->load->model("AdminModel");
 		if(!$this->session->userdata("userName"))
 		{
 			return redirect("Login"); 
@@ -85,6 +86,18 @@ class Products extends CI_Controller {
 		$price = $this->input->post("price");
 		$curency = strtolower($this->input->post("curecy"));
 		$proId = $this->input->post("proId");
+		$getSetting = $this->AdminModel->getSetting();
+		$referReward = $getSetting['refer_reward'];
+		$rewardss = $price * $referReward /100;
+		if($curency=="btc")
+		{
+			$reward = number_format($rewardss,8);
+		}
+		else
+		{
+			$reward = number_format($rewardss,9);
+		}
+		
 
 		//get Seller From Products
 		$this->db->where("id",$proId);
@@ -109,6 +122,62 @@ class Products extends CI_Controller {
 		//Admin Get
 		$adminPrice = $price - $sellerPrice;
 
+		//Check Referral
+		$this->db->where("user_id",$user_id);
+		$gtOrdr = $this->db->get("orders")->num_rows();
+		if($gtOrdr==0)
+		{
+			$this->db->where("user_id",$user_id);
+			$gtUssers = $this->db->get("users")->row();
+
+			if($gtUssers->parent_referral == null)
+			{
+
+			}
+			else
+			{
+				$this->db->where("referral_code",$gtUssers->parent_referral);
+				$gtrefer = $this->db->get("users")->row();
+				$referId = $gtrefer->user_id;
+
+				//Get Referer Wallet
+				$this->db->where("user_id",$referId);
+				$gtWllR = $this->db->get("user_wallet");
+				if($gtWllR->num_rows()==0)
+				{
+					$wlBalR = 0;
+				}
+				else
+				{
+					$wlBalR = $gtWllR->row()->$curency;
+				}
+					$referBalance = $wlBalR+$reward;
+					if($gtWllR->num_rows()==0)
+					{
+						$this->db->insert("user_wallet",["user_id"=>$referId,$curency=>$referBalance]);
+					}
+					else
+					{
+						$this->db->where("user_id",$referId);
+						$this->db->update("user_wallet",[$curency=>$referBalance]);
+					}
+					$transactionDataR = array
+										(
+											"user_id"			=>$referId,
+											"notes"				=>"You have rewarded due to Refer",
+											"currency"			=>$curency,
+											"tr_type"			=>"earning",
+											"credit"			=>$reward,
+											"date"				=>date('Y-m-d')
+										);
+					$this->db->insert("transaction",$transactionDataR);
+
+				}
+			}
+
+
+
+
 		//Get Seller Wallet
 		$this->db->where("user_id",$sellerId);
 		$gtWllS = $this->db->get("user_wallet");
@@ -125,7 +194,7 @@ class Products extends CI_Controller {
 		//User Wallet
 		$this->db->where("user_id",$user_id);
 		$gtWllU = $this->db->get("user_wallet");
-		$gtWllU = $this->db->get("user_wallet");
+		
 		if($gtWllU->num_rows()==0)
 		{
 			$wlBalU = 0;
@@ -194,11 +263,24 @@ class Products extends CI_Controller {
 			//Insert into Transaction for User
 			$this->db->insert("transaction",$transactionDataU);
 			//Update user wallet for Saller
-			$this->db->where("user_id",$sellerId);
-			$this->db->update("user_wallet",$userWalletSeller);
+			if($gtWllS->num_rows()==0)
+			{
+				$this->db->insert("user_wallet",$userWalletSeller);
+			}else
+			{
+				$this->db->where("user_id",$sellerId);
+				$this->db->update("user_wallet",$userWalletSeller);
+			}
 			//Update user wallet for User
-			$this->db->where("user_id",$user_id);
-			$this->db->update("user_wallet",$userWalletUser);
+			if($gtWllU->num_rows()==0)
+			{
+				$this->db->insert("user_wallet",$userWalletUser);
+			}
+			else
+			{
+				$this->db->where("user_id",$user_id);
+				$this->db->update("user_wallet",$userWalletUser);
+			}
 			//Update Product Status
 			$this->db->where("id",$proId);
 			$this->db->update("cards",["status"=>0]);
@@ -210,6 +292,7 @@ class Products extends CI_Controller {
 		{
 			echo "inv";
 		}
+	
 
 	}
 

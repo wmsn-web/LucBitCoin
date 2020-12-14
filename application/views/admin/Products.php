@@ -57,21 +57,24 @@
                       if(!empty($proData)): ?>
                         <?php $s =1; foreach($proData as $pro):  $card = strtolower($pro['brand']); $sl = $s++; ?>
                       <?php
-                          
+                          $getSetting = $this->AdminModel->getSetting();
                             $endpoint = 'live';
                             $access_key = '70d19982004ef8aa2c639ae10d4c06af';
                             //$access_key = '336afadbf57caf193b6e4bb89da64dec';
                             
                               $icn = "<i class='fab fa-btc'></i>";
                               $icn2 = "<i class='fab fa-ethereum'></i>";
+                              /*
                               $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
                               $ex = json_decode($json);  
                               $bttc = $ex->rates->BTC;
-                              $cryps = $pro['price'] / $bttc;
-                              $cryp = number_format($cryps,8);
                               $etth = $ex->rates->ETH;
-                              $cryps2 = $pro['price'] / $etth;
-                              $cryp2 = number_format($cryps2,8);
+                              */
+                              $cryps = $pro['price'] * $getSetting['btcRate'];
+                              $cryp = number_format($cryps,8);
+                              
+                              $cryps2 = $pro['price'] * $getSetting['ethRate'];
+                              $cryp2 = number_format($cryps2,9);
 
                               if($pro['getSell'] >0 && $pro['status']=="0")
                               {

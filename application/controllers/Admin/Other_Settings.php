@@ -15,8 +15,8 @@ class Other_Settings extends CI_Controller {
 
 	public function index()
 	{
-		$getSaleCharg = $this->AdminModel->getSaleCharg();
-		$this->load->view("admin/Other_Settings",["saleChrg"=>$getSaleCharg]);
+		$getSetting = $this->AdminModel->getSetting();
+		$this->load->view("admin/Other_Settings",["settings"=>$getSetting]);
 	}
 
 	public function SetChrge()
@@ -24,6 +24,15 @@ class Other_Settings extends CI_Controller {
 		$chrg = $this->input->post("chrg");
 		$this->db->update("settings",["sale_charge"=>$chrg]);
 		$this->session->set_flashdata("Feed","Sale Charge Updated");
+		return redirect("Admin/Other_Settings");
+	}
+
+	public function SetCureency()
+	{
+		$btcRate = $this->input->post("btcRate");
+		$ethRate = $this->input->post("ethRate");
+		$this->db->update("Settings",["btc_rate"=>$btcRate,"eth_rate"=>$ethRate]);
+		$this->session->set_flashdata("Feed","Currency Rate Updated");
 		return redirect("Admin/Other_Settings");
 	}
 }

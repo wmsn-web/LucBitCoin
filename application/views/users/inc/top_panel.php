@@ -1,4 +1,5 @@
 <?php
+  $getSetting = $this->AdminModel->getSetting();
   $username = $this->session->userdata("userName"); 
   $this->db->where("username",$username);
   $gtU = $this->db->get("users")->row();
@@ -48,8 +49,8 @@
 
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
-      <span class="sp1"><b>BTC/USD:</b> 12301.20 </span><?= nbs(8); ?>
-      <span class="sp2"><b>ETH/USD:</b> 12301.20 </span>
+      <span class="sp1"><b>BTC/USD:</b> <?= number_format(1 / $getSetting['btcRate'],2); ?> </span><?= nbs(8); ?>
+      <span class="sp2"><b>ETH/USD:</b> <?= number_format(1 / $getSetting['ethRate'],2); ?> </span>
 
     </form>
 

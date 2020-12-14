@@ -57,6 +57,7 @@
                       if(!empty($proData)): ?>
                         <?php $s =1; foreach($proData as $pro):  $card = strtolower($pro['brand']); $sl = $s++; ?>
                           <?php
+                          $getSetting = $this->AdminModel->getSetting();
                           
                             $endpoint = 'live';
                             $access_key = '70d19982004ef8aa2c639ae10d4c06af';
@@ -67,22 +68,33 @@
                             if($row->crypto_select =="BTC")
                             {
                               $icn = "<i class='fab fa-btc'></i>";
+                              /*
                               $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
                               $ex = json_decode($json);  
-                              $bttc = $ex->rates->BTC;
-                              $cryps = $pro['price'] / $bttc;
+                              $ccrr = $ex->rates->BTC;
+                              */
+                              $cryps = $pro['price'] * $getSetting['btcRate'];
                               $cryp = number_format($cryps,8);
                             }
                             else
                             {
                               $icn = "<i class='fab fa-ethereum'></i>";
+                              /*
                               $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
                               $ex = json_decode($json);  
-                              $etth = $ex->rates->ETH;
-                              $cryps = $pro['price'] / $etth;
+                              $ccrr = $ex->rates->ETH;
+                              */
+                              $cryps = $pro['price'] * $getSetting['ethRate'];
                               $cryp = number_format($cryps,9);
                             }
-                            
+                            if($pro['cvv']=="")
+                            {
+                              $cvvs = "<i class='fas fa-close text-danger'></i>";
+                            }
+                            else
+                            {
+                              $cvvs = "<i class='fas fa-check text-success'></i>";
+                            }
 
                           ?>
 
@@ -91,7 +103,7 @@
                             <td><img src="<?= base_url('assets/cards/'.$card.".png"); ?>" width="25"> 
                               <?= nbs(5); ?><?= $pro['bin']; ?></td>
                             <td><?= $pro['exp']; ?></td>
-                            <td><?= $pro['cvv']; ?></td>
+                            <td><?= $cvvs; ?></td>
                             <td><?= $pro['type']; ?></td>
                             <td style="text-align: left; width: 10%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['bank']; ?></td>
                             <td style="text-align: left; width: 20%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['address']; ?></td>

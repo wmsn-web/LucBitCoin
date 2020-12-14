@@ -36,6 +36,10 @@
             <button class="btn btn-outline-primary" data-toggle="modal" data-target="#saleCharge">
               Set Sale Charge(%)
             </button>
+
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#setCur">
+              Set Currency
+            </button>
             
           </div>
         </div>

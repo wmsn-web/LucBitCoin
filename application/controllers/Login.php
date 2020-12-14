@@ -20,6 +20,7 @@ class Login extends CI_controller
 		$user = $this->input->post("user");
 		$pass = $this->input->post("pass");
 		$scPin = $this->input->post("security");
+		$parentCode = $this->input->post("parentCode");
 
 		$password = password_hash($pass, PASSWORD_DEFAULT);
 		$this->db->where("username",$user);
@@ -30,17 +31,44 @@ class Login extends CI_controller
 		}
 		else
 		{
-			$data = array
-						(
-							"username" =>$user,
-							"password"	=>$password,
-							"security_pin"	=>$scPin,
-							"user_type"	=>"user"
-						);
-			$this->db->insert("users",$data);
-			$this->session->set_userdata("userName",$user);
-			echo "done";
-
+			if($parentCode == "")
+			{
+				$data = array
+							(
+								"username" =>$user,
+								"password"	=>$password,
+								"security_pin"	=>$scPin,
+								"user_type"	=>"user",
+								"referral_code"=> uniqid()
+							);
+				$this->db->insert("users",$data);
+				$this->session->set_userdata("userName",$user);
+				echo "done";
+			}
+			else
+			{
+				$this->db->where("referral_code",$parentCode);
+				$getReff = $this->db->get("users")->num_rows();
+				if($getReff >0)
+				{
+					$data = array
+								(
+									"username" =>$user,
+									"password"	=>$password,
+									"security_pin"	=>$scPin,
+									"user_type"	=>"user",
+									"parent_referral"=>$parentCode,
+									"referral_code"=> uniqid()
+								);
+					$this->db->insert("users",$data);
+					$this->session->set_userdata("userName",$user);
+					echo "done";
+				}
+				else
+				{
+					echo "inv";
+				}
+			}
 		}
 	}
 

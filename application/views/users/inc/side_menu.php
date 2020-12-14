@@ -64,7 +64,7 @@
             </a>            
           </li>
           <li class="nav-item has-treeview">
-            <a href="<?= base_url('Rules'); ?>" <?php if($uri=="Checker"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+            <a href="<?= base_url('Checker'); ?>" <?php if($uri=="Checker"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-check"></i>
               <p>
                 Checker

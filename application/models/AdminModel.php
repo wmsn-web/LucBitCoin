@@ -178,10 +178,18 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function getSaleCharg()
+	public function getSetting()
 	{
 		$get = $this->db->get("settings")->row();
-		$SaleCharg = $get->sale_charge;
-		return $SaleCharg;
+		
+
+		$data = array
+					(
+						"SaleCharg"	=>$get->sale_charge,
+						"btcRate"	=>$get->btc_rate,
+						"ethRate"	=>$get->eth_rate,
+						"refer_reward"=>$get->refer_reward
+					);
+		return $data;
 	}
 }
