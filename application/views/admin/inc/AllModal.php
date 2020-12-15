@@ -64,43 +64,77 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Set Sale Charge</h4>
+              <h4 class="modal-title">Set Currency</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
               <?php
-                $endpoint = 'live';
+              /*
+                $endpoint = 'test';
                 $access_key = '70d19982004ef8aa2c639ae10d4c06af';
                 $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
                 $ex = json_decode($json);  
                 $ccrrBtc = $ex->rates->BTC;
                 $ccrrEth = $ex->rates->ETH;
+                */
               ?>
               
               <form action="<?= base_url('Admin/Other_Settings/SetCureency'); ?>" method="post">
                <div class="row">
                   <div class="form-group col-sm-5">
-                    <label><i class="fas fa-dollar-sign"></i> USD</label>
+                    <label><i class="fab fa-btc"></i> Bitcoin</label>
                     <input type="text"  class="form-control" readonly value="1">
                   </div>
                   <div class="form-group col-sm-2"><label>&nbsp;</label> <p>= </p></div>
                   <div class="form-group col-sm-5">
-                    <label><i class="fab fa-btc"></i> Bitcoin</label><small class="text-danger">Curent: <?= number_format(1 / $ccrrBtc,8); ?></small>
+                    <label><i class="fab fa-dollar-sign"></i> USD</label><small class="text-danger">Curent: </small>
                     <input type="text" name="btcRate" class="form-control" required value="<?= $settings['btcRate']; ?>">
                   </div>
                   <div class="form-group col-sm-5">
-                    <label><i class="fas fa-dollar-sign"></i> USD</label>
+                    <label><i class='fab fa-ethereum'></i> Ethereum</label>
                     <input type="number"  class="form-control" readonly value="1">
                   </div>
                   <div class="form-group col-sm-2"><label>&nbsp;</label> <p>= </p></div>
                   <div class="form-group col-sm-5">
-                    <label><i class='fab fa-ethereum'></i> Ethereum</label> <small class="text-danger">Curent: <?= number_format(1 / $ccrrEth,9); ?></small>
+                    <label><i class='fab fa-dollar-sign'></i> USD</label> <small class="text-danger">Curent: </small>
                     <input type="text" name="ethRate" class="form-control" required value="<?= $settings['ethRate']; ?>">
                   </div>
                   <div class="form-group">
                     <button class="btn btn-primary">Save</button>
                   </div>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="checker">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Set Checker Price</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              
+              <form action="<?= base_url('Admin/Other_Settings/SetChecker'); ?>" method="post">
+               
+                <div class="form-group">
+                  <label>Checker USD</label>
+                  <input type="text" name="ck_btc" class="form-control" required value="<?= $settings['checker_price_btc']; ?>">
+                </div>
+                <div class="form-group">
+                  
+                  <input type="hidden" name="ck_eth" class="form-control"  value="<?= $settings['checker_price_eth']; ?>">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary">Save</button>
                 </div>
               </form>
             </div>

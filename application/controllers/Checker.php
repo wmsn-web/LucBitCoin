@@ -38,14 +38,32 @@ class Checker extends CI_Controller {
 		else
 		{
 			$wlBal = $wll->row()->$cryptoSelect;
-			$chkPrc = "checker_price_".$cryptoSelect;
-			if($getSetting[$chkPrc] > $wlBal)
+			$chkPrcss = "checker_price_btc";
+			if($cryptoSelect=="btc")
+			{
+				$json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                              $ex = json_decode($json);  
+                              $ccrr = $ex->bitcoin->usd;
+                              $chkPrc = number_format($getSetting[$chkPrcss]/ $ccrr,8);
+            }
+            else
+            {
+            	$json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                              $ex = json_decode($json);  
+                              $ccrr = $ex->ethereum->usd;
+                              $chkPrc = number_format($getSetting[$chkPrcss]/ $ccrr,9);
+            }
+        	
+
+			
+
+			if($chkPrc > $wlBal)
 			{
 				echo "<b class='text-danger'>Not Enough Balance</b>";
 			}
 			else
 			{
-				$newBal = $wlBal - $getSetting[$chkPrc];
+				$newBal = $wlBal - $chkPrc;
 				$this->db->where("user_id",$gtUser->user_id);
 				$this->db->update("user_wallet",[$cryptoSelect=>$newBal]);
 
@@ -54,7 +72,7 @@ class Checker extends CI_Controller {
 											"user_id"			=>$gtUser->user_id,
 											"notes"				=>"Checker Used",
 											"currency"			=>$cryptoSelect,
-											"debit"				=>$getSetting[$chkPrc],
+											"debit"				=>$chkPrc,
 											"date"				=>date('Y-m-d')
 										);
 				$this->db->insert("transaction",$trData);
@@ -63,12 +81,12 @@ class Checker extends CI_Controller {
 									(
 										"customer_id"		=>$gtUser->user_id,
 										"report"			=>"Card Checked by user (".$user.")",
-										$cryptoSelect		=>$getSetting[$chkPrc],
+										$cryptoSelect		=>$chkPrc,
 										"date"				=>date('Y-m-d')
 									);
 
 				$this->db->insert("admin_wallet",$adminWalletData);
-
+									
 				$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn);
 					$resp = json_decode($response);
 					//$this->session->set_userdata("CardDtls",$response);
@@ -105,6 +123,7 @@ class Checker extends CI_Controller {
 								<td><?= @$valid; ?></td>
 							</tr>
 						</table>
+						
 					<?php
 			}
 		}

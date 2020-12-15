@@ -37,21 +37,39 @@
              <div class="card-body">
                <div class="row justify-content-left">
                 <div class="col-md-10">
-                  <table>
-                    <tr>
-                      <td><input type="text" name="" class="form-controlm" id="ccn" placeholder="Card Number"></td>
-                      <td>
-                        <input type="number" name="" class="floatInput" id="mnth" placeholder="Month">
-                        <input type="number" name="" class="floatInput" id="yr" placeholder="Year">
-                      </td>
-                      <td><input type="number" name="" class="form-controlm" id="cvv" placeholder="CVV"></td>
-                      
-                      <td><button id="chk" class="btnSmall">Check</button></td>
-                    </tr>
-                  </table>
+                  <div class="table-responsive">
+                    <input type="text" maxlength="17" class="floatInput" id="ccn" placeholder="Card Number">
+                      <input type="text" maxlength="2" name="" class="floatInputS" id="mnth" placeholder="Month">
+                      <input type="text" maxlength="2" class="floatInputS" id="yr" placeholder="Year">
+                      <input type="text" maxlength="4" class="floatInputS" id="cvv" placeholder="CVV">
+                      <button id="chk" class="btnSmall">Check</button>
+                  
+                  </div>
                 </div>
-                 
+                 <?php $getSetting = $this->AdminModel->getSetting();
+                 $user = $this->session->userdata("userName");
+                 $this->db->where("username",$user);
+                 $gtUser = $this->db->get("users")->row();
+                 $cryptoSelect = $gtUser->crypto_select;
+                  if($cryptoSelect=="BTC")
+                    {
+                      $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                                            $ex = json_decode($json);  
+                                            $ccrr = $ex->bitcoin->usd;
+                                            $icn = '<i class="fab fa-btc"></i>';
+                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,8);
+                          }
+                          else
+                          {
+                            $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                                            $ex = json_decode($json);  
+                                            $ccrr = $ex->ethereum->usd;
+                                            $icn = '<i class="fab fa-ethereum"></i>';
+                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,9);
+                          }
+                  ?>
                   <div class="form-group col-sm-12">
+                    <b>Price: <?= $icn; ?> <span id=""><?= $prc; ?></span>
                     <div id="result"></div>
                   </div>
                </div>
@@ -104,7 +122,7 @@
         }
         else
         {
-          $.post("<?= base_url('Checker/CheckCard'); ?>",
+          $.post("<?= base_url('Checker/CheckCard'); ?>", 
               {
                 user: user,
                 ccn: ccn

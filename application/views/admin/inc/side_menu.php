@@ -99,6 +99,17 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url('Admin/Admin-Wallet'); ?>" <?php if($uri=="Admin-Wallet"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+              <i class="nav-icon fas fa-wallet"></i>
+              <p>
+                Admin Wallet
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            
+          </li>
           
           
           

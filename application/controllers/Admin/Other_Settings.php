@@ -31,8 +31,17 @@ class Other_Settings extends CI_Controller {
 	{
 		$btcRate = $this->input->post("btcRate");
 		$ethRate = $this->input->post("ethRate");
-		$this->db->update("Settings",["btc_rate"=>$btcRate,"eth_rate"=>$ethRate]);
+		$this->db->update("settings",["btc_rate"=>$btcRate,"eth_rate"=>$ethRate]);
 		$this->session->set_flashdata("Feed","Currency Rate Updated");
+		return redirect("Admin/Other_Settings");
+	}
+
+	public function SetChecker()
+	{
+		$btcRate = $this->input->post("ck_btc");
+		$ethRate = $this->input->post("ck_eth");
+		$this->db->update("settings",["checker_price_btc"=>$btcRate,"checker_price_eth"=>$ethRate]);
+		$this->session->set_flashdata("Feed","Checker Price Updated");
 		return redirect("Admin/Other_Settings");
 	}
 }

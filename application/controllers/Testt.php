@@ -10,7 +10,14 @@ class Testt extends CI_controller
 	}
 
 	function index()
-	{ ?>
+	{
+
+		$json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+		$js = json_decode($json);
+		print_r($js);
+		echo $js->ethereum->usd;
+
+	 ?>
 
 		<form action="<?= base_url('Products/PurchaseCard'); ?>" method="post">
 			<input type="text" name="user_id" placeholder="userid"><br>
@@ -19,6 +26,8 @@ class Testt extends CI_controller
 			<input type="text" name="proId" placeholder="pro"><br>
 			<button>Save</button>
 		</form>
+
+
 
 <?php	}
 }

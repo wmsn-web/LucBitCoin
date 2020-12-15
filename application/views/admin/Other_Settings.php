@@ -40,6 +40,9 @@
             <button class="btn btn-outline-primary" data-toggle="modal" data-target="#setCur">
               Set Currency
             </button>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#checker">
+              Set Checker Price
+            </button>
             
           </div>
         </div>

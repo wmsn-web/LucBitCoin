@@ -194,4 +194,58 @@ class AdminModel extends CI_model
 					);
 		return $data;
 	}
+
+	public function walletData()
+	{
+		//Balances
+		//btc
+		$this->db->select_sum("btc");
+		$wlbtc = $this->db->get("admin_wallet");
+		if($wlbtc->num_rows()==0)
+		{
+			$balBtc = 0;
+		}
+		else
+		{
+			$rowbtc = $wlbtc->row();
+			$balBtc = number_format($rowbtc->btc,8);
+		}
+		//eth
+		$this->db->select_sum("eth");
+		$wleth = $this->db->get("admin_wallet");
+		if($wleth->num_rows()==0)
+		{
+			$baletc = 0;
+		}
+		else
+		{
+			$roweth = $wleth->row();
+			$baletc = number_format($roweth->eth,9);
+		}
+
+		$this->db->order_by("id","DESC");
+		$get = $this->db->get("admin_wallet");
+		if($get->num_rows()==0)
+		{
+			$trData = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key) {
+				$trData[] = array
+								(
+									"id"		=>$key->id,
+									"buyer"		=>$key->customer_id,
+									"notes"		=>$key->report,
+									"date"		=>$key->date,
+									"btc"		=>$key->btc,
+									"eth"		=>$key->eth
+								);
+			}
+		}
+
+		$data = ["balanceBtc"=>$balBtc,"balanceEth"=>$baletc,"trData"=>$trData];
+		return $data;
+	}
 }

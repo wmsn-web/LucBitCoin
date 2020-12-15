@@ -68,23 +68,23 @@
                             if($row->crypto_select =="BTC")
                             {
                               $icn = "<i class='fab fa-btc'></i>";
-                              /*
-                              $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
+                              
+                              $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                               $ex = json_decode($json);  
-                              $ccrr = $ex->rates->BTC;
-                              */
-                              $cryps = $pro['price'] * $getSetting['btcRate'];
+                              $ccrr = $ex->bitcoin->usd;
+                              
+                              $cryps = $pro['price'] / $ccrr;
                               $cryp = number_format($cryps,8);
                             }
                             else
                             {
-                              $icn = "<i class='fab fa-ethereum'></i>";
-                              /*
-                              $json = file_get_contents('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'');
+                              $icn = "<i class='fab fa-ethereum'></i>"; 
+                              
+                              $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
                               $ex = json_decode($json);  
-                              $ccrr = $ex->rates->ETH;
-                              */
-                              $cryps = $pro['price'] * $getSetting['ethRate'];
+                              $ccrr = $ex->ethereum->usd;
+                              
+                              $cryps = $pro['price'] / $ccrr;
                               $cryp = number_format($cryps,9);
                             }
                             if($pro['cvv']=="")

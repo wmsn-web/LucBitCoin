@@ -68,7 +68,7 @@
     </section>
     <!-- /.content -->
   </div>
-  <?php include('inc/Footer.php'); ?>
+  <?php include('inc/footer.php'); ?>
   </div>
   <?php include('inc/js.php'); ?>
 </body>

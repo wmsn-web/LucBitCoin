@@ -32,6 +32,13 @@
             $eth = $eths;
           }
         }
+
+        $json1 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                              $ex1 = json_decode($json1);  
+                              $ccrr1 = $ex1->bitcoin->usd;
+        $json2 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                              $ex2 = json_decode($json2);  
+                              $ccrr2 = $ex2->ethereum->usd;
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -49,8 +56,8 @@
 
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
-      <span class="sp1"><b>BTC/USD:</b> <?= number_format(1 / $getSetting['btcRate'],2); ?> </span><?= nbs(8); ?>
-      <span class="sp2"><b>ETH/USD:</b> <?= number_format(1 / $getSetting['ethRate'],2); ?> </span>
+      <span class="sp1"><b>BTC/USD:</b> <?= number_format($ccrr1,2); ?> </span><?= nbs(8); ?>
+      <span class="sp2"><b>ETH/USD:</b> <?= number_format($ccrr2,2); ?> </span>
 
     </form>
 
