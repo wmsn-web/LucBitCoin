@@ -54,7 +54,36 @@
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-three-tabContent">
                   <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
-                     <table id="example1" class="table table-bordered">
+                    <table id="example1" class="tble tble-bordered">
+                       <thead>
+                        <tr>
+                          <th>SL</th>
+                          <th>Base</th>
+                          <th>% Lives</th>
+                          <th>% Sold</th>
+                          
+                        </tr>
+                       </thead>
+                       <tbody>
+                        <?php if(!empty($getBaseData)): ?>
+                          <?php $s = 1; foreach($getBaseData as $keys): $sl = $s++;
+                            
+                           ?>
+                            <tr>
+                               <td><?= $sl; ?></td>
+                               <td><?= $keys['base'] ?></td>
+                               <td><?= $keys['live'] ?></td>
+                               <td><?= $keys['sold'] ?></td>
+                               
+                             </tr>
+                          <?php endforeach; ?>
+                        <?php endif; ?>
+                         
+                       </tbody>
+                       
+                     </table>
+                     <?= br(3); ?>
+                     <table id="example5" class="tble tble-bordered">
                        <thead>
                         <tr>
                           <th>Date</th>
@@ -92,7 +121,7 @@
                        
                      </table>
                        
-                     </table>
+                     
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                      <select id="base" class="smallInput">

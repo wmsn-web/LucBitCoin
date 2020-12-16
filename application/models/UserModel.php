@@ -306,4 +306,55 @@ class UserModel extends CI_model
 
 		return $data;
 	}
+
+	public function getBaseData($seller)
+	{
+		$this->db->where("username",$seller);
+		$users = $this->db->get("users")->row();
+		$this->db->where(["seller"=>$seller]);
+		$getBs = $this->db->get("bases");
+		if($getBs->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$resBs = $getBs->result();
+			foreach($resBs as $bs)
+			{
+				$this->db->where(["seller"=>$seller, "base"=>$bs->basename,"status"=>1]);
+				$getCrdlive = $this->db->get("cards")->num_rows();
+
+				$this->db->where(["seller"=>$seller, "base"=>$bs->basename,"status"=>0]);
+				$getCrdNotlive = $this->db->get("cards")->num_rows();
+
+				$this->db->where(["seller"=>$seller, "base"=>$bs->basename]);
+				$getCrd = $this->db->get("cards");
+				if($getCrd->num_rows()==0)
+				{
+					$getCrdNumAll = $getCrd->num_rows();
+					$sold_percent = 0;
+				}
+				else
+				{	
+					
+					$getCrdNumAll = $getCrd->num_rows();
+					$st1 = 100 / $getCrdNumAll;
+					$sold_percent = number_format($st1*$getCrdNotlive,2);
+
+					$st2 = 100/$getCrdNumAll;
+					$lives = number_format($st2*$getCrdlive,2);
+				}
+				$data[] = array
+							(
+								"base"	=>$bs->basename,
+								"sold"=>$sold_percent. " %",
+								"live"=>$lives." %"
+							);
+			}
+		}
+
+		return $data;
+
+	}
 }

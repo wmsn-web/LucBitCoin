@@ -43,6 +43,9 @@
             <button class="btn btn-outline-primary" data-toggle="modal" data-target="#checker">
               Set Checker Price
             </button>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#depAddr">
+              Set Diposit Address
+            </button>
             
           </div>
         </div>
