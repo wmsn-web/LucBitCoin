@@ -144,3 +144,35 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+      <div class="modal fade" id="">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Set Checker Price</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              
+              <form action="<?= base_url('Admin/Other_Settings/SetChecker'); ?>" method="post">
+               
+                <div class="form-group">
+                  <label>Checker USD</label>
+                  <input type="text" name="ck_btc" class="form-control" required value="<?= $settings['checker_price_btc']; ?>">
+                </div>
+                <div class="form-group">
+                  
+                  <input type="hidden" name="ck_eth" class="form-control"  value="<?= $settings['checker_price_eth']; ?>">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>

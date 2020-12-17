@@ -37,7 +37,7 @@
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Sales</a>
+                    <a class="nav-link " id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Sales</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Transactions</a>
@@ -125,7 +125,7 @@
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                     <form action="NewTests/ppost" method="post">
-                     <select id="base" class="smallInput">
+                     <select id="base" class="smallInput" required>
                        <option value="">Select Base</option>
                        <option value="New Base">New Base</option>
                        <?php if(!empty($base)): ?>
@@ -134,8 +134,8 @@
                         <?php endforeach ?>
                        <?php endif; ?>
                      </select>
-                     <input id="bsn" type="hidden" name="base_name"  class="smallInput" placeholder="Base Name">
-                     <select id="cd" name="cd" class="smallInput">
+                     <input id="bsn" type="hidden" name="base_name"  class="smallInput" placeholder="Base Name" required>
+                     <select id="cd" name="cd" class="smallInput" required>
                        <option value="">Select Type</option>
                        <option value="Card">Card</option>
                        <option value="Dump">Dump</option>
@@ -144,10 +144,10 @@
                      <div class="format-notice">
                       <div id="cards">
                          <p>Format:<br>
-                          PRICE | CCN | MONTH | YEAR| CVV | NAME | ADDRESS | CITY | STATE | ZIP | COUNTRY</p>
+                          PRICE | CCN | MONTH | YEAR| CVV | NAME | ADDRESS | CITY | STATE | ZIP | COUNTRY | MOBILE | EMAIL</p>
 
                           <p>Example:
-                          12.50|4111222233334444|01|16|123|JOHN DOE|FAKE STREET 123 | CHICAGO | ILLINOIS | 12345 | UNITED STATES OF AMERICA</p>
+                          12.50|4111222233334444|01|16|123|JOHN DOE|FAKE STREET 123 | CHICAGO | ILLINOIS | 12345 | UNITED STATES OF AMERICA |2505550199|john@gmail.com</p>
 
                           <span>ATTENTION: CURRENT SHOP FEE IS AT 30%</span>
                         </div>
@@ -161,13 +161,17 @@
                           <span>ATTENTION: CURRENT SHOP FEE IS AT 30%</span>
                         </div>
                      </div>
-                     <textarea id="ccno" class="form-control" rows="6" placeholder="Paste Data here using correct format" name="ccDeta"></textarea>
+                     <textarea id="ccno" style="font-size: 11px" class="form-control" rows="8" placeholder="Paste Data here using correct format" name="ccDeta" required></textarea>
                      <div class="form-group"><br>
+                      <input type="hidden" name="seller" value="<?= $this->session->userdata("userName"); ?>">
                       <button id="upl" class="btn btn-primary">Parse & Upload</button>
                     </div>
                   </form>
+                  <?php if($newFeedupl = $this->session->flashdata("newFeedupl")): ?>
                     <div class="message">
+                      <?php foreach ($newFeedupl as $upll) { echo $upll; }?>
                     </div>
+                  <?php endif; ?>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                      <div class="row justify-content-center">
@@ -248,7 +252,18 @@
   </div>
   <?php include('inc/table_js.php'); ?>
 
-  
+  <?php if($newFeedupl = $this->session->flashdata("newFeedupl")): ?>
+    
+    <script type="text/javascript">
+      $("#custom-tabs-three-profile").addClass('active');
+      $("#custom-tabs-three-profile").addClass('show');
+      $("#custom-tabs-three-home").removeClass('active');
+      $("#custom-tabs-three-home").removeClass('show');
+      $(".message").addClass("message-success");
+            
+    </script>
+
+  <?php endif; ?>
 
 
 
@@ -306,7 +321,7 @@
           $("#cards").hide();
         }
       });
-      $("#upl").click(function(){
+      $("#upldd").click(function(){
         bsn = $("#bsn").val();
         cd = $("#cd").val();
         ccno = $("#ccno").val();
@@ -346,29 +361,23 @@
                 $(".message").removeClass("message-success");
                 $(".message").removeClass("message-danger");
                 $(".message").html("");
-                spl = ccno.split("|");
+
+
+                //spl = ccno.split("|");
 
                 
-                $.post("<?= base_url('Seller/parseUpload'); ?>",
+                $.post("<?= base_url('NewTests/ppost'); ?>",
                       {
-                        price : spl[0],
-                        ccn:  spl[1], 
-                        month: spl[2],
-                        year:  spl[3],
-                        cvv:   spl[4],
-                        name:  spl[5],
-                        address:spl[6],
-                        city: spl[7],
-                        state:spl[8],
-                        zip: spl[9],
-                        country: spl[10],
-                        basename: bsn,
+                        ccno: ccno,
+                        base_name: bsn,
                         cd: cd
                       },
                       
                       function(response)
                       {
-                          
+
+                        //alert(response);
+                          /*
                           respns = JSON.parse(response);
                           if(respns.msg == "error")
                           {
@@ -381,8 +390,9 @@
                             $(".message").addClass("message-success");
                             $(".message").html(respns.note);
                           } 
+                          */
+                          alert(response);
                           
-                          //alert(response);
                       }
                   )
 

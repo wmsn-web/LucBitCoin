@@ -349,7 +349,7 @@ class UserModel extends CI_model
 							(
 								"base"	=>$bs->basename,
 								"sold"=>$sold_percent. " %",
-								"live"=>$lives." %"
+								"live"=>@$lives." %"
 							);
 			}
 		}

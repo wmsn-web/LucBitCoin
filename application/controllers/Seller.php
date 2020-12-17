@@ -24,7 +24,7 @@ class Seller extends CI_Controller {
 		$getWithdrawRequests = $this->UserModel->getWithdrawRequests($seller);
 		$getBaseData = $this->UserModel->getBaseData($seller);
 		//print_r($getBaseData);
-		$this->load->view("users/Seller",["base"=>$basenames,"saleData"=>$getSaleCards,"trData"=>$gtTransactions,"earning"=>$earning,"userDatas"=>$getUserDetails,"rqData"=>$getWithdrawRequests,"getBaseData"=>$getBaseData]);
+		$this->load->view("users/newSeller",["base"=>$basenames,"saleData"=>$getSaleCards,"trData"=>$gtTransactions,"earning"=>$earning,"userDatas"=>$getUserDetails,"rqData"=>$getWithdrawRequests,"getBaseData"=>$getBaseData]);
 		/*
 			$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc=5157359818590564');
 			$response = json_decode($response);
