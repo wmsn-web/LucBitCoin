@@ -5,7 +5,7 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>CC4U</title>
-  <?php include("inc/layout.php"); ?>
+  <?php include("inc/table_layout.php"); ?>
   <body class="hold-transition sidebar-mini layout-fixed">
 	<div class="wrapper">
 		<?php include("inc/top_panel.php"); ?>
@@ -31,19 +31,42 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        
-        <!-- /.row -->
-        <!-- Main row -->
-        
-        <!-- /.row (main row) -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="example1" class="simpleTable">
+                    <thead>
+                      <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php if(!empty($dashData)): ?>
+                        <?php $s=1; foreach ($dashData as $key): $sl=$s++; ?>
+                          <tr>
+
+                            <td><?= $sl; ?>:<?= nbs(4); ?><span class="smlSpan"><i class="fa fa-university"></i></span><?= nbs(3); ?> <b>[<?= $key['cd']; ?>]</b><?= nbs(4); ?> Username <?= $key['user']; ?> updated  base <?= $key['base']; ?> with <?= $key['tot'] ?> cards.</td>
+                            <td><?= $key['date']; ?></td>
+                          </tr>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <?php include('inc/footer.php'); ?>
   </div>
-  <?php include('inc/js.php'); ?>
+  <?php include('inc/table_js.php'); ?>
   <script type="text/javascript">
    $("#slctEth").click(function(){
         user = "<?= $this->session->userdata('userName'); ?>";

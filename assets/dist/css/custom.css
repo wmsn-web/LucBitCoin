@@ -263,6 +263,37 @@
 	border: solid 1px #fff;
 	color: #fff;
 }
+.simpleTable
+{
+	width: 100%;
+}
+.simpleTable > tr
+{
+	margin-top: 8px;
+}
+.simpleTable td span
+{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	background: #F75600;
+	padding: 2px;
+	color: #fff;
+}
+.simpleTable td
+{
+	font-style: italic;
+	font-size: 14px;
+	color: #6D6D6D;
+	padding: 4px;
+	background: #F6F6F6;
+	border-bottom: solid 1px #ccc;
+}
+.simpleTable td:last-child
+{
+	text-align: right;
+}
 @media (max-width: 991px) 
 {
 	.lodd i

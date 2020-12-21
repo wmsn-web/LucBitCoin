@@ -73,9 +73,9 @@
         <div class="sqBox"></div>
         <div class="addrDiv">
             <label>Bitcoin(BTC) deposit address:</label>
-            <span class="">1B8PC8hD1zj8Fx3y4WHErDZYNZaCkRcdFd</span>
+            <span class=""><?= $getSetting['addr_btc']; ?></span>
             <label>Ethereum(ETH) deposit address:</label>
-            <span class="">1B8PC8hD1zj8Fx3y4WHErDZYNZaCkRcdFd</span>
+            <span class=""><?= $getSetting['addr_eth']; ?></span>
           </div>
       </li>
       <li class="nav-item dropdown">

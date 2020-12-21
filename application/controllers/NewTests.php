@@ -22,7 +22,9 @@ class NewTests extends CI_Controller {
 		$cd = $this->input->post("cd");
 		$seller = $this->input->post("seller");
 
+
 		$skuList = explode(PHP_EOL, $ccdata);
+		$cardCount = count($skuList);
 		$ln =1;
 		if($basename=="")
 		{
@@ -59,9 +61,63 @@ class NewTests extends CI_Controller {
 			        $cd= @$cd;
 			        $mobile= @$expl[11];
 			        $email= @$expl[12];
-			        $uuppll = $this->uploadCards($price,$ccn,$month,$year,$cvv,$name,$address,$city,$state,$zip,$country,$basename,$cd,$mobile,$email,$seller);
 
-			        $return ="Line ".$lnn.": ". $uuppll."<br>";
+
+			        //Check Date
+			        $mn = $year."-".$month."-30";
+                    $n = strtotime($mn)."-";
+                    $today = date('Y-m-d');
+                    $td = strtotime($today);
+
+                    if($td > $n)
+                    {
+                    	$return = "Line ".$lnn.": Incorrect Month Year Field<br>";
+                    }
+                    else
+                    {
+                    	$cvvStr = strlen($cvv);
+                    	if($cvvStr > 4 | $cvvStr < 3)
+						{
+							$return = "Line ".$lnn.": Incorrect CVV<br>";
+						}
+						else
+						{
+							if($price =="")
+							{ $return = "Line ".$lnn.": Enter Price Price <br>";}
+							elseif ($ccn == "")
+							{ $return = "Line ".$lnn.": Enter Card Number <br>";} 
+							elseif($month=="")
+							{ $return = "Line ".$lnn.": Enter valid Month <br>";} 
+							elseif($year=="")
+							{ $return = "Line ".$lnn.": Enter Valid year<br>";}
+							elseif($cvv=="")
+							{ $return = "Line ".$lnn.": Enter Valid CVV<br>";} 
+							elseif($name=="")
+							{ $return = "Line ".$lnn.": Enter Name<br>";}
+							elseif($address=="")
+							{ $return = "Line ".$lnn.": Enter Address<br>";}
+							/*
+							elseif($city=="")
+							{ $return = "Line ".$lnn.": Enter City Name<br>";} 
+							elseif($state=="")
+							{ $return = "Line ".$lnn.": Enter State name<br>";}
+							elseif($zip=="")
+							{ $return = "Line ".$lnn.": Enter zip code<br>";}
+							*/
+							elseif($country=="")
+							{ $return = "Line ".$lnn.": Enter Country Name<br>";}
+
+							else
+							{
+				        		$uuppll = $this->uploadCards($price,$ccn,$month,$year,$cvv,$name,$address,$city,$state,$zip,$country,$basename,$cd,$mobile,$email,$seller);
+				        		$uuppll = "success";
+				        		$return ="Line ".$lnn.": ". $uuppll."<br>";
+				        	}
+						}
+			        	
+                    }
+
+			        
 	         	}
 	         	else
 	         	{
@@ -123,7 +179,7 @@ class NewTests extends CI_Controller {
 									"cd"		=>$cd,
 									"status"	=>1,
 									"country_code"=>$response->countrycode,
-									"date"		=>date('Y-m-d')
+									"date"		=>date('Y-m-d h:i:s')
 								);
 					
 						//echo $ccn;

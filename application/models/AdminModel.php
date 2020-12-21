@@ -190,7 +190,9 @@ class AdminModel extends CI_model
 						"ethRate"	=>$get->eth_rate,
 						"refer_reward"=>$get->refer_reward,
 						"checker_price_btc"=>$get->checker_price_btc,
-						"checker_price_eth"=>$get->checker_price_eth
+						"checker_price_eth"=>$get->checker_price_eth,
+						"addr_btc"	=>$get->addr_btc,
+						"addr_eth"	=>$get->addr_eth
 					);
 		return $data;
 	}

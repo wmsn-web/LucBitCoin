@@ -44,4 +44,13 @@ class Other_Settings extends CI_Controller {
 		$this->session->set_flashdata("Feed","Checker Price Updated");
 		return redirect("Admin/Other_Settings");
 	}
+
+	public function SetDepAddr()
+	{
+		$addr_btc = $this->input->post("addr_btc");
+		$addr_eth = $this->input->post("addr_eth");
+		$this->db->update("settings",["addr_btc"=>$addr_btc,"addr_eth"=>$addr_eth]);
+		$this->session->set_flashdata("Feed","Deposit Address Updated");
+		return redirect("Admin/Other_Settings");
+	}
 }

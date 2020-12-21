@@ -39,6 +39,7 @@
                   <table  id="example5" class="tble tble-bordered">
                     <thead>
                       <tr>
+                        <th>SL</th>
                         <th>DATE</th>
                         <th>BIN</th>
                         <th>EXP</th>
@@ -99,6 +100,7 @@
                           ?>
 
                           <tr>
+                            <td><?= $sl; ?></td>
                             <td><?= $pro['date']; ?></td>
                             <td><img src="<?= base_url('assets/cards/'.$card.".png"); ?>" width="25"> 
                               <?= nbs(5); ?><?= $pro['bin']; ?></td>

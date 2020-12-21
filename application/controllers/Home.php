@@ -6,6 +6,7 @@ class Home extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model("UserModel");
 		if(!$this->session->userdata("userName"))
 		{
 			return redirect("Login");
@@ -14,8 +15,10 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		
-		$this->load->view('users/Home');
+		$dashData = $this->UserModel->getDashData();
+		$this->load->view('users/Home',["dashData"=>$dashData]);
+		//echo "<pre>";
+		//print_r($dashData);
 		
 	}
 

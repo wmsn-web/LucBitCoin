@@ -145,25 +145,25 @@
         <!-- /.modal-dialog -->
       </div>
 
-      <div class="modal fade" id="">
+      <div class="modal fade" id="depAddr">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Set Checker Price</h4>
+              <h4 class="modal-title">Set Deposit Address</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
               
-              <form action="<?= base_url('Admin/Other_Settings/SetChecker'); ?>" method="post">
+              <form action="<?= base_url('Admin/Other_Settings/SetDepAddr'); ?>" method="post">
                
                 <div class="form-group">
-                  <label>Checker USD</label>
-                  <input type="text" name="ck_btc" class="form-control" required value="<?= $settings['checker_price_btc']; ?>">
+                  <label><i class="fab fa-btc"></i> BTC Address</label>
+                  <input type="text" name="addr_btc" class="form-control" required value="<?= $settings['addr_btc']; ?>">
                 </div>
                 <div class="form-group">
-                  
-                  <input type="hidden" name="ck_eth" class="form-control"  value="<?= $settings['checker_price_eth']; ?>">
+                  <label><i class="fab fa-ethereum"></i> ETH Address</label>
+                  <input type="text" name="addr_eth" class="form-control"  value="<?= $settings['addr_eth']; ?>">
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary">Save</button>

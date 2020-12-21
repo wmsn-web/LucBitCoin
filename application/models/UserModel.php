@@ -164,10 +164,18 @@ class UserModel extends CI_model
 		$this->db->where("username",$seller);
 		$user_id = $this->db->get("users")->row()->user_id;
 
-		$this->db->where(["user_id"=>$user_id,"tr_type"=>"earning"]);
+		$this->db->where(["user_id"=>$user_id,"tr_type"=>"earning","currency"=>"btc"]);
 		$this->db->select_sum("credit");
-		$gtTr = $this->db->get("transaction")->row();
-		return $gtTr->credit;
+		$gtTrBtcss = $this->db->get("transaction")->row();
+		$gtTrBtc = $gtTrBtcss->credit;
+
+		$this->db->where(["user_id"=>$user_id,"tr_type"=>"earning","currency"=>"eth"]);
+		$this->db->select_sum("credit");
+		$gtTrEthss = $this->db->get("transaction")->row();
+		$gtTrEth = $gtTrEthss->credit;
+
+		$gtTr = ["gtTrBtc"=>$gtTrBtc,"gtTrEth"=>$gtTrEth];
+		return $gtTr;
 	}
 
 	public function setWithdrawAddress($withdrawBtc,$withdrawEth,$username)
@@ -307,7 +315,7 @@ class UserModel extends CI_model
 		return $data;
 	}
 
-	public function getBaseData($seller)
+	public function getBaseData($seller) 
 	{
 		$this->db->where("username",$seller);
 		$users = $this->db->get("users")->row();
@@ -350,6 +358,74 @@ class UserModel extends CI_model
 								"base"	=>$bs->basename,
 								"sold"=>$sold_percent. " %",
 								"live"=>@$lives." %"
+							);
+			}
+		}
+
+		return $data;
+
+	}
+
+	public function getDashData()
+	{
+		
+		$this->db->order_by("id","DESC");
+		
+		$this->db->distinct();
+		$this->db->select("base");
+		$this->db->where(["status"=>1]);
+		$get = $this->db->get("cards");
+		
+		//$get = $this->db->query("SELECT DISTINCT base FROM cards WHERE status=1 ORDER BY id DESC ");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key) {
+				$this->db->order_by("id","DESC");
+				$this->db->where(["base"=>$key->base,"status"=>1]);
+				$get2 = $this->db->get("cards");
+				$tot = $get2->num_rows();
+				$row = $get2->row();
+				$data[] = array
+								(
+									"tot"=>$tot,
+									"cd"=>$row->cd,
+									"user"=>$row->seller,
+									"date"=>$row->date,
+									"base"=>$key->base
+								);
+			}
+		}
+		return $data;
+	}
+
+	public function getfundRequest($user)
+	{
+		$this->db->order_by("id","DESC");
+		$this->db->where("username",$user);
+		$get = $this->db->get("fund_request");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key => $val) {
+				$data[] = array
+							(
+								"username"	=>$val->username,
+		        				"currency"	=>$val->currency,
+		        				"amount"	=>$val->amount,
+		        				"notes"		=>$val->notes,
+		        				"from_addr"	=>$val->from_addr,
+		        				"status"	=>$val->status,
+		        				"date"		=>$val->date,
+		        				"id"		=>$val->id
 							);
 			}
 		}

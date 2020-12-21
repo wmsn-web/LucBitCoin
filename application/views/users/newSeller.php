@@ -37,7 +37,7 @@
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link " id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Sales</a>
+                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Sales</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Transactions</a>
@@ -147,7 +147,7 @@
                           PRICE | CCN | MONTH | YEAR| CVV | NAME | ADDRESS | CITY | STATE | ZIP | COUNTRY | MOBILE | EMAIL</p>
 
                           <p>Example:
-                          12.50|4111222233334444|01|16|123|JOHN DOE|FAKE STREET 123 | CHICAGO | ILLINOIS | 12345 | UNITED STATES OF AMERICA |2505550199|john@gmail.com</p>
+                          12.50|4111222233334444|01|2016|123|JOHN DOE|FAKE STREET 123 | CHICAGO | ILLINOIS | 12345 | UNITED STATES OF AMERICA |2505550199|john@gmail.com</p>
 
                           <span>ATTENTION: CURRENT SHOP FEE IS AT 30%</span>
                         </div>
@@ -157,11 +157,11 @@
 
                           <p>Example:
                           18.50|4111222233334444^JHON/DOE^160110100000000000|4111222233334444=160110100000000000</p>
-
                           <span>ATTENTION: CURRENT SHOP FEE IS AT 30%</span>
+
                         </div>
                      </div>
-                     <textarea id="ccno" style="font-size: 11px" class="form-control" rows="8" placeholder="Paste Data here using correct format" name="ccDeta" required></textarea>
+                     <textarea id="ccno" style="font-size: 13px" class="form-control" rows="8" placeholder="Paste Data here using correct format" name="ccDeta" required></textarea>
                      <div class="form-group"><br>
                       <input type="hidden" name="seller" value="<?= $this->session->userdata("userName"); ?>">
                       <button id="upl" class="btn btn-primary">Parse & Upload</button>
@@ -197,7 +197,7 @@
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
                     <div class="pull-right">
-                      <h5>Total Earnings: <span><?= $earning; ?></span></h5>
+                      <b class="text-primary">Total Earnings: <span><i class="fab fa-btc"></i> <?= number_format($earning['gtTrBtc'],8); ?><?= nbs(5); ?><i class="fab fa-ethereum"></i> <?= number_format($earning['gtTrEth'],9); ?></span></b>
                     </div>
                      <table id="example5" class="table table-bordered">
                        <thead>
@@ -214,17 +214,21 @@
                             if($key['currency'] == "btc")
                             {
                               $icn = "<i class='fab fa-btc'></i>";
+                              $dbt = number_format($key['debit'],8); 
+                              $crdt = number_format($key['credit'],8);
                             }
                             else
                             {
                               $icn = "<i class='fab fa-ethereum'></i>";
+                              $dbt = number_format($key['debit'],9); 
+                              $crdt = number_format($key['credit'],9);
                             }
                            ?>
                             <tr>
                                <td><?= $key['date'] ?></td>
                                <td><?= $key['notes'] ?></td>
-                               <td class="text-danger"><?= $icn." ".$key['debit'] ?></td>
-                               <td class="text-success"><?= $icn." ".$key['credit'] ?></td>
+                               <td class="text-danger"><?= $icn." ".$dbt ?></td>
+                               <td class="text-success"><?= $icn." ".$crdt ?></td>
                                
                              </tr>
                           <?php endforeach; ?>

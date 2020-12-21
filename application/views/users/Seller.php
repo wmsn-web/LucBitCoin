@@ -193,7 +193,7 @@
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
                     <div class="pull-right">
-                      <h5>Total Earnings: <span><?= $earning; ?></span></h5>
+                      <h5>Total Earnings: <span><?= $earning['gtTrBtc']; ?></span></h5> 
                     </div>
                      <table id="example5" class="table table-bordered">
                        <thead>

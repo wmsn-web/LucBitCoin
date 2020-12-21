@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model("UserModel");
 		if(!$this->session->userdata("adminUser"))
 		{
 			return redirect("Admin/Login");
@@ -14,8 +15,8 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		
-		$this->load->view('admin/Dashboard');
+		$dashData = $this->UserModel->getDashData();
+		$this->load->view('admin/Dashboard',["dashData"=>$dashData]);
 		
 	}
 
