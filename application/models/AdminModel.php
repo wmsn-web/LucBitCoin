@@ -82,7 +82,7 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function setBalance($id,$currency,$amount)
+	public function setBalance($id,$currency,$amount,$rqid)
 	{
 		$this->db->where("user_id",$id);
 		$gtWllet = $this->db->get("user_wallet");
@@ -90,6 +90,19 @@ class AdminModel extends CI_model
 		{
 			$this->db->insert("user_wallet",["user_id"=>$id,$currency=>$amount]);
 			$return = true;
+			$trdata = array
+							(
+								"user_id"			=>$id,
+								"notes"				=>"Diposit to Wallet",
+								"currency"			=>$currency,
+								"tr_type"			=>null,
+								"credit"			=>$amount,
+								"date"				=>date('Y-m-d')
+							);
+					$this->db->insert("transaction",$trdata);
+			$this->db->where("id",$rqid);
+			$this->db->update("fund_request",["status"=>1]);
+							
 		}
 		else
 		{
@@ -99,6 +112,19 @@ class AdminModel extends CI_model
 			$this->db->where("user_id",$id);
 			$this->db->update("user_wallet",["user_id"=>$id,$currency=>$bal]);
 			$return = "added";
+
+			$trdata = array
+							(
+								"user_id"			=>$id,
+								"notes"				=>"Diposit to Wallet",
+								"currency"			=>$currency,
+								"tr_type"			=>null,
+								"credit"			=>$amount,
+								"date"				=>date('Y-m-d')
+							);
+					$this->db->insert("transaction",$trdata);
+					$this->db->where("id",$rqid);
+			$this->db->update("fund_request",["status"=>1]);
 		}
 
 		return true;
@@ -248,6 +274,38 @@ class AdminModel extends CI_model
 		}
 
 		$data = ["balanceBtc"=>$balBtc,"balanceEth"=>$baletc,"trData"=>$trData];
+		return $data;
+	}
+
+	public function getfundRequest()
+	{
+		$this->db->order_by("id","DESC");
+		$get = $this->db->get("fund_request");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key => $val) {
+				$this->db->where("username",$val->username);
+				$gtUser = $this->db->get("users")->row();
+				$data[] = array
+							(
+								"username"	=>$val->username,
+		        				"currency"	=>$val->currency,
+		        				"amount"	=>$val->amount,
+		        				"notes"		=>$val->notes,
+		        				"from_addr"	=>$val->from_addr,
+		        				"status"	=>$val->status,
+		        				"date"		=>$val->date,
+		        				"id"		=>$val->id,
+		        				"user_id"	=>$gtUser->user_id
+							);
+			}
+		}
+
 		return $data;
 	}
 }

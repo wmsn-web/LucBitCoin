@@ -11,9 +11,9 @@
               <form action="<?= base_url('Admin/All_users/AddUserBalance'); ?>" method="post">
                 <input type="hidden" id="userId" name="userId">
                 <div class="form-group">
-                  <input type="radio" name="currency" checked value="btc">
+                  <input type="radio" name="currency" id="btc" checked value="btc">
                   <label>Balance For BTC</label>
-                  <input type="radio" name="currency" value="eth">
+                  <input type="radio" name="currency" id="eth" value="eth">
                   <label>Balance For ETH</label>
                 </div>
                 <div class="form-group">

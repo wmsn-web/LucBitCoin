@@ -19,7 +19,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li> 
               <li class="breadcrumb-item active">All Users</li>
             </ol>
           </div><!-- /.col -->
@@ -61,7 +61,6 @@
                                 </table>
                               </td>
                               <td>
-                                <button id="ac_<?= $users['user_id']; ?>_<?= $users['username']; ?>" data-toggle="modal" data-target="#userAction" class="btnSmall actionss">Add Balance</button>
                               </td>
                           </tr>
                       <?php endforeach; ?>

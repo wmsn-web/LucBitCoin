@@ -110,6 +110,17 @@
             </a>
             
           </li>
+          <li class="nav-item has-treeview">
+            <a href="<?= base_url('Admin/Fund-Request'); ?>"  <?php if($uri=="Fund-Request"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+              <i class="fas fa-donate"></i>
+              <p>
+                Fund Request
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            
+          </li>
           
           
           
