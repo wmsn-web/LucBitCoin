@@ -11,6 +11,12 @@ class Home extends CI_Controller {
 		{
 			return redirect("Login");
 		}
+		$this->db->where("username",$this->session->userdata("userName"));
+		$checkBlock = $this->db->get("users")->row();
+		if($checkBlock->status == "0")
+		{
+			return redirect("Account-Block");
+		}
 	}
 
 	public function index()
@@ -19,6 +25,7 @@ class Home extends CI_Controller {
 		$this->load->view('users/Home',["dashData"=>$dashData]);
 		//echo "<pre>";
 		//print_r($dashData);
+
 		
 	}
 
