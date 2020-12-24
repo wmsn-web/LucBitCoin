@@ -47,7 +47,16 @@
                   </thead>
                   <tbody>
                   <?php if(!empty($userData)): ?>
-                      <?php foreach($userData as $users): ?>
+                      <?php foreach($userData as $users):
+                          if($users['status']=="0")
+                          {
+                            $button = "<a href='".base_url('Admin/All_users/UnlockUser/'.$users['user_id'])."'><button class='btnSmall btnSmall-danger'>Unblock</button></a>";
+                          }
+                          else
+                          {
+                            $button = "<a href='".base_url('Admin/All_users/BlockUser/'.$users['user_id'])."'><button class='btnSmall btnSmall-primary'>Block</button></a>";
+                          }
+                       ?>
                           <tr>
                               <td><?= $users['username']; ?></td>
                               <td><?= $users['withdraw_btc']; ?></td>
@@ -55,12 +64,12 @@
                               <td>
                                 <table class="tble tble-bordered">
                                   <tr>
-                                    <td><i class='fab fa-btc'></i> <?= $users['balBtc']; ?></td>
-                                    <td><i class='fab fa-ethereum'></i> <?= $users['balEth']; ?></td>
+                                    <td><i class='fab fa-btc text-primary'></i> <?= $users['balBtc']; ?></td>
+                                    <td><i class='fab fa-ethereum  text-warning'></i> <?= $users['balEth']; ?></td>
                                   </tr>
                                 </table>
                               </td>
-                              <td>
+                              <td><?= $button; ?>
                               </td>
                           </tr>
                       <?php endforeach; ?>

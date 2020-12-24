@@ -23,7 +23,10 @@
             <?= br(3); ?>
             <div class="card">
               <div class="card-body">
-                
+                <div class="text-danger text-center">
+                  <h3><i class="fa fa-lock"></i> Your Account is locked</h3>
+                  <p>Please contact us at  <a href="mailto:ccmarket@xabber.org">ccmarket@xabber.org</a></p>
+                </div>
               </div>
             </div>
           </div>

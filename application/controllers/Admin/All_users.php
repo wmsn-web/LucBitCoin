@@ -6,7 +6,7 @@ class All_users extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		if(!$this->session->userdata("adminUser"))
+		if(!$this->session->userdata("adminUser")) 
 		{
 			return redirect("Admin/Login");
 		}
@@ -31,6 +31,22 @@ class All_users extends CI_Controller {
 			$this->session->set_flashdata("Feed","Balance Added");
 			return redirect("Admin/All_users");
 		}
+	}
+
+	public function UnlockUser($uid)
+	{
+		$this->db->where("user_id",$uid);
+		$this->db->update("users",["status"=>1]);
+		$this->session->set_flashdata("Feed","User Unblocked");
+			return redirect("Admin/All_users");
+	}
+
+	public function BlockUser($uid)
+	{
+		$this->db->where("user_id",$uid);
+		$this->db->update("users",["status"=>0]);
+		$this->session->set_flashdata("Feed","User Unblocked");
+			return redirect("Admin/All_users");
 	}
 
 }

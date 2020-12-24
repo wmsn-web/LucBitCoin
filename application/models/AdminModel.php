@@ -74,7 +74,8 @@ class AdminModel extends CI_model
 								"withdraw_btc"	=>$key->withdraw_btc,
 								"withdraw_eth"	=>$key->withdraw_eth,
 								"balBtc"		=>$btc,
-								"balEth"		=>$eth	
+								"balEth"		=>$eth,
+								"status"		=>$key->status
 							);
 			}
 		}
