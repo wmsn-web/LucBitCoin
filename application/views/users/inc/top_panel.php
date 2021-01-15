@@ -84,9 +84,16 @@
           
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header"><?= $this->session->userdata("userName"); ?></span>
+          <span class="dropdown-item dropdown-header bg-success">
+            <b>My Profile</b></span>
           <div class="dropdown-divider"></div>
           
+          <div class="dropdown-divider"></div>
+            <a onclick="copyToClipboard('#myRef')" href="javascript:void(0)" class="dropdown-item">
+              <b>My Refferal Code: <span  id="myRef"><?= $gtU->referral_code; ?></span></b></span>
+            </a>
+
+            
           
           <div class="dropdown-divider"></div>
           <a href="<?= base_url('Home/Logout'); ?>" class="dropdown-item">
@@ -101,3 +108,6 @@
       
     </ul>
   </nav>
+  <script type="text/javascript">
+    
+  </script>

@@ -1,5 +1,6 @@
 <!-- Font Awesome -->
-  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" description="Sanjay Natta (Web Marketing Solutions)">
   <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">

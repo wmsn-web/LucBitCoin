@@ -123,8 +123,12 @@
                        
                      
                   </div>
+                 
                   <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                    <form action="NewTests/ppost" method="post">
+                    <div class="col-md-12 text-center">
+                      <h4>Please Contact</h4><p>ccmarker@xabber.org</p>
+                    </div>
+                    <!--form action="NewTests/ppost" method="post">
                      <select id="base" class="smallInput">
                        <option value="">Select Base</option>
                        <option value="New Base">New Base</option>
@@ -165,7 +169,7 @@
                      <div class="form-group"><br>
                       <button id="upl" class="btn btn-primary">Parse & Upload</button>
                     </div>
-                  </form>
+                  </form-->
                     <div class="message">
                     </div>
                   </div>

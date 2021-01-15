@@ -15,7 +15,7 @@
           <img src="<?= base_url('assets/'); ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="<?= base_url('Admin/Dashboard'); ?>" class="d-block">CC4U</a>
+          <a href="<?= base_url('Admin/Dashboard'); ?>" class="d-block">CC Market</a>
         </div>
       </div>
 
@@ -115,6 +115,17 @@
               <i class="fas fa-donate"></i>
               <p>
                 Fund Request
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="<?= base_url('Admin/Upload-cards'); ?>"  <?php if($uri=="Upload-cards"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+              <i class="fas fa-upload"></i>
+              <p>
+                Upload cards
                 <i class="fas fa-angle-left right"></i>
                 
               </p>

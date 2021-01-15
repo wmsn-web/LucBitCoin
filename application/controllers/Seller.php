@@ -44,7 +44,7 @@ class Seller extends CI_Controller {
 	public function parseUpload()
 	{//Function Start
 
-		$seller = $this->session->userdata("userName");
+		$seller = $this->input->post("seller");
 		$price = $this->input->post("price");
 		$ccn = $this->input->post("ccn");
 		$month = $this->input->post("month");
@@ -95,40 +95,47 @@ class Seller extends CI_Controller {
 				}
 				else
 				{
-					$data = array
-								(
-									"name"		=>$name,
-									"card_no"	=>$ccn,
-									"bin"		=>@$response->bin,
-									"exp"		=>$month."/".$year,
-									"cvv"		=>$cvv,
-									"type"		=>$response->type,
-									"card_name"	=>$response->card,
-									"bank"		=>$response->bank,
-									"address"	=>$address.", ".$city.", ".$state."-".$zip.", ".$country,
-									"seller"	=>$seller,
-									"base"		=>$basename,
-									"price"		=>$price,
-									"valid"		=>$response->valid,
-									"cd"		=>$cd,
-									"status"	=>1,
-									"country_code"=>$response->countrycode,
-									"date"		=>date('Y-m-d')
-								);
-					
-						//echo $ccn;
-						$this->db->insert("cards",$data);
-						$this->db->where(["basename"=>$basename,"seller"=>$seller]);
-						$getBase = $this->db->get("bases")->num_rows();
-						if($getBase ==0)
-						{
-							$this->db->insert("bases",["basename"=>$basename,"seller"=>$seller]);
+					if($seller == "")
+					{
+						$return = array("msg"=>"error","note"=>"<b>Error:</b> Please Select Seller");
+					}
+					else
+						{	
+						$data = array
+									(
+										"name"		=>$name,
+										"card_no"	=>$ccn,
+										"bin"		=>@$response->bin,
+										"exp"		=>$month."/".$year,
+										"cvv"		=>$cvv,
+										"type"		=>$response->type,
+										"card_name"	=>$response->card,
+										"bank"		=>$response->bank,
+										"address"	=>$address.", ".$city.", ".$state."-".$zip.", ".$country,
+										"seller"	=>$seller,
+										"base"		=>$basename,
+										"price"		=>$price,
+										"valid"		=>$response->valid,
+										"cd"		=>$cd,
+										"status"	=>1,
+										"country_code"=>$response->countrycode,
+										"date"		=>date('Y-m-d')
+									);
+						
+							//echo $ccn;
+							$this->db->insert("cards",$data);
+							$this->db->where(["basename"=>$basename,"seller"=>$seller]);
+							$getBase = $this->db->get("bases")->num_rows();
+							if($getBase ==0)
+							{
+								$this->db->insert("bases",["basename"=>$basename,"seller"=>$seller]);
+							}
+							$return = array("msg"=>"succ","note"=>"<b><i class='fa fa-check-circle'></i> </b> Card added Succesfuly");
+							//echo json_encode($return);
 						}
-						$return = array("msg"=>"succ","note"=>"<b><i class='fa fa-check-circle'></i> </b> Card added Succesfuly");
-						//echo json_encode($return);
-					
-				}//response Errors start
-			}
+						
+					}//response Errors start
+				}
 			
 
 			

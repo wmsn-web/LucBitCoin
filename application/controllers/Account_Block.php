@@ -13,6 +13,12 @@ class Account_Block extends CI_Controller {
 		{
 			return redirect("Login"); 
 		}
+		$this->db->where("username",$this->session->userdata("userName"));
+		$checkBlock = $this->db->get("users")->row();
+		if($checkBlock->status == 1)
+		{
+			return redirect("Rules");
+		}
 	}
 
 	public function index()

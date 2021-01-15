@@ -37,7 +37,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">Admin</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="<?= base_url('Admin/ChangePassword'); ?>" class="dropdown-item">
             <i class="fas fa-lock mr-2"></i>Change Password
             
           </a>

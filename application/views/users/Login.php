@@ -23,7 +23,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>CC4U</b></a>
+    <a href="#"><b>CC Market</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -90,8 +90,7 @@
       
 
       <div class="social-auth-links text-center mb-3">
-        
-        
+        <a href="<?= base_url('ForgotPass'); ?>"> Forgot Password? </a>
       </div>
       <!-- /.social-auth-links -->
 
