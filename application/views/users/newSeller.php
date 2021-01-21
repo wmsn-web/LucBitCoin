@@ -123,7 +123,11 @@
                        
                      
                   </div>
-                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                  <div class="tab-pane fade text-center" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                      <h5>To upload your leads please contact us</h5>
+                      <h6 class="text-primary">ccmarker@xabber.org</h6>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile22" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                     <form action="NewTests/ppost" method="post">
                      <select id="base" class="smallInput" required>
                        <option value="">Select Base</option>

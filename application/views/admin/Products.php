@@ -48,6 +48,7 @@
                         <th>ADDRESS</th>
                         <th>SELLER</th>
                         <th>BASE</th>
+                        <th>LIVE %</th>
                         <th>$</th>
                         <th>Action</th>
                       </tr>
@@ -106,6 +107,7 @@
                             <td style="text-align: left; width: 20%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['address']; ?></td>
                             <td><?= $pro['seller']; ?></td>
                             <td><?= $pro['base']; ?></td>
+                            <td><?= $pro['lives']; ?></td>
                             <td><span class="text-success"><i class="fas fa-dollar-sign"></i> <?= number_format($pro['price'],2); ?></span><br>
                               <span class="text-primary"><?= $icn; ?> <?= $cryp; ?></span><br>
                               <span class="text-primary"><?= $icn2; ?> <?= $cryp2; ?></span>

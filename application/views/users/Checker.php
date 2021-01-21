@@ -43,6 +43,7 @@
                       <input type="text" maxlength="2" class="floatInputS" id="yr" placeholder="Year">
                       <input type="text" maxlength="4" class="floatInputS" id="cvv" placeholder="CVV">
                       <button id="chk" class="btnSmall">Check</button>
+
                   
                   </div>
                 </div>
@@ -70,6 +71,7 @@
                   ?>
                   <div class="form-group col-sm-12">
                     <b>Price: <?= $icn; ?> <span id=""><?= $prc; ?></span>
+                      <img id="ldr" src="<?= base_url('assets/load.gif'); ?>" width="65">
                     <div id="result"></div>
                   </div>
                </div>
@@ -85,6 +87,9 @@
   </div>
   <?php include('inc/js.php'); ?>
   <script type="text/javascript">
+    $(document).ready(function(){
+      $("#ldr").hide();
+    })
    $("#slctEth").click(function(){
         user = "<?= $this->session->userdata('userName'); ?>";
         $.post("<?= base_url('Products/ChangetoEth'); ?>",
@@ -110,6 +115,7 @@
           )
       });
       $("#chk").click(function(){
+        $("#ldr").show();
         ccn = $("#ccn").val();
         mnth = $("#mnth").val();
         yr = $("#yr").val();
@@ -119,17 +125,22 @@
         if(ccn =="" || mnth =="" || yr =="" || cvv =="" )
         {
           $("#result").html("<b class='text-danger'>Invalid Input!</b>");
+          $("#ldr").hide();
         }
         else
         {
           $.post("<?= base_url('Checker/CheckCard'); ?>", 
               {
                 user: user,
-                ccn: ccn
+                ccn: ccn,
+                month: mnth,
+                year: yr,
+                cvv: cvv
               },
               function(response)
               {
                 $("#result").html(response);
+                $("#ldr").hide();
               }
             )
           

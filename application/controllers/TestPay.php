@@ -30,7 +30,7 @@ class TestPay extends CI_controller
 
 	public function new()
 	{
-		$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc=4515034180886417|08|2033|668';
+		$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc=5181161400338687|08|21|727';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -80,7 +80,7 @@
 
                         </div>
                      </div>
-                     <textarea id="ccno" style="font-size: 13px" class="form-control" rows="8" placeholder="Paste Data here using correct format" name="ccDeta" required></textarea>
+                     <textarea id="ccno" style="font-size: 13px" class="form-control" rows="8" placeholder="Paste Data here using correct format" name="ccDeta" required><?php if($ccdata = $this->session->flashdata("ccdata")){ echo $ccdata; } ?></textarea>
                      <div class="form-group"><br>
                       
                       <button id="upl" class="btn btn-primary">Parse & Upload</button>

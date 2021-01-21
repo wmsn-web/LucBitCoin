@@ -61,6 +61,11 @@ class UserModel extends CI_model
 		{
 			$res = $get->result();
 			foreach ($res as $key) {
+				$this->db->where("basename",$key->base);
+				$gtBases = $this->db->get("bases")->row();
+				
+					$prcnt = $gtBases->prcnt;
+				
 				$dt = $key->date;
 				$dts = date_create($dt);
 				$date = date_format($dts,'d-m-Y');
@@ -77,6 +82,7 @@ class UserModel extends CI_model
 									"address"	=>$key->address,
 									"seller"	=>$key->seller,
 									"base"		=>$key->base,
+									"lives"		=>$prcnt." %",
 									"price"		=>$key->price,
 									"cntr_cd"	=>strtolower($key->country_code)
 									
@@ -232,6 +238,8 @@ class UserModel extends CI_model
 									"brand"		=>$key->card_name,
 									"bank"		=>$key->bank,
 									"address"	=>$key->address,
+									"mobile"	=>$key->mobile,
+									"email"		=>$key->email,
 									"seller"	=>$key->seller,
 									"base"		=>$key->base,
 									"price"		=>$key->price,

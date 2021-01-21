@@ -28,6 +28,9 @@ class Checker extends CI_Controller {
 	public function CheckCard()
 	{
 		$ccn = $this->input->post("ccn");
+		$month = $this->input->post("month");
+		$year = $this->input->post("year");
+		$cvv = $this->input->post("cvv");
 		$user = $this->input->post("user");
 		$getSetting = $this->AdminModel->getSetting();
 		$this->db->where("username",$user);
@@ -93,13 +96,29 @@ class Checker extends CI_Controller {
 
 				$this->db->insert("admin_wallet",$adminWalletData);
 									
-				$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn);
+				/* $response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn); */
+				$url1 = 'https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn;
+					$ch1 = curl_init();
+					curl_setopt($ch1, CURLOPT_URL, $url1);
+					curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($ch1, CURLOPT_TIMEOUT, 0);
+					$response = curl_exec($ch1);
 					$resp = json_decode($response);
 					//$this->session->set_userdata("CardDtls",$response);
 					//$resp = $this->session->userdata("CardDtls");
-					if(@$resp->valid ==true)
+					$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc='.$ccn.'|'.$month.'|'.$year.'|'.$cvv.'';
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+					$validds = curl_exec($ch);
+					if($validds=="Live")
 					{
 						$valid = "<i class='fa fa-check text-success'></i>";
+
+
 					}
 					else
 					{
@@ -126,7 +145,7 @@ class Checker extends CI_Controller {
 							</tr>
 							<tr>
 								<th>Valid</th>
-								<td><?= @$valid; ?></td>
+								<td><?= $validds; ?></td>
 							</tr>
 						</table>
 						

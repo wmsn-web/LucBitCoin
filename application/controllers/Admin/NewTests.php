@@ -22,6 +22,8 @@ class NewTests extends CI_Controller {
 
 		$skuList = explode(PHP_EOL, $ccdata);
 		$cardCount = count($skuList);
+		//print_r($ccdata);
+		//die();
 		$ln =1;
 		if($basename=="")
 		{
@@ -127,6 +129,7 @@ class NewTests extends CI_Controller {
         }
          //print_r($rtn);
          $this->session->set_flashdata("newFeedupl",$rtn);
+         $this->session->set_flashdata("ccdata",$ccdata);
          	return redirect("Admin/Upload-cards");
 	}			
 
@@ -140,7 +143,14 @@ class NewTests extends CI_Controller {
 		}
 		else
 		{
-			$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn);
+			/*	$response = file_get_contents('https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn);*/
+				$url1 = 'https://api.bincodes.com/cc/?format=json&api_key=e718447ce3ccc921d446dc16417c5763&cc='.$ccn;
+					$ch1 = curl_init();
+					curl_setopt($ch1, CURLOPT_URL, $url1);
+					curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($ch1, CURLOPT_TIMEOUT, 0);
+					$response = curl_exec($ch1);
 				$response = json_decode($response);
 				//print_r($response);
 				if(@$response->error)
@@ -159,15 +169,7 @@ class NewTests extends CI_Controller {
 				else
 				{
 
-					$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc='.$ccn.'|'.$month.'|'.$year.'|'.$cvv.'';
-					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, $url);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-					curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-					$validds = curl_exec($ch);
-					if($validds=="Live")
-					{
+					
 						$data = array
 									(
 										"name"		=>$name,
@@ -175,17 +177,19 @@ class NewTests extends CI_Controller {
 										"bin"		=>@$response->bin,
 										"exp"		=>$month."/".$year,
 										"cvv"		=>$cvv,
-										"type"		=>$response->type,
-										"card_name"	=>$response->card,
+										"type"		=>@$response->type,
+										"card_name"	=>@$response->card,
 										"bank"		=>$response->bank,
 										"address"	=>$address.", ".$city.", ".$state."-".$zip.", ".$country,
+										"mobile"	=>$mobile,
+										"email"		=>$email,
 										"seller"	=>$seller,
 										"base"		=>$basename,
 										"price"		=>$price,
-										"valid"		=>$response->valid,
+										"valid"		=>@$response->valid,
 										"cd"		=>$cd,
 										"status"	=>1,
-										"country_code"=>$response->countrycode,
+										"country_code"=>@$response->countrycode,
 										"date"		=>date('Y-m-d h:i:s')
 									);
 						
@@ -198,12 +202,7 @@ class NewTests extends CI_Controller {
 								$this->db->insert("bases",["basename"=>$basename,"seller"=>$seller]);
 							}
 							$return = "Card added Succesfuly";
-					}
-					else
-					{
-						$return = "Card is Invalid";
-					}
-					curl_close($ch);
+					
 
 
 			}

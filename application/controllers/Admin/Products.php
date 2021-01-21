@@ -24,7 +24,7 @@ class Products extends CI_Controller {
 	public function DisbleProduct($id='')
 	{
 		$this->db->where("id",$id);
-		$this->db->update("cards",["status"=>0]);
+		$this->db->update("cards",["status"=>0,"mtr_status"=>"disb"]);
 		$this->session->set_flashdata("Feed","Card Disabled");
 		return redirect("Admin/Products");
 	}
@@ -32,7 +32,7 @@ class Products extends CI_Controller {
 	public function EnaleProduct($id='')
 	{
 		$this->db->where("id",$id);
-		$this->db->update("cards",["status"=>1]);
+		$this->db->update("cards",["status"=>1,"mtr_status"=>null]);
 		$this->session->set_flashdata("Feed","Card Enabled");
 		return redirect("Admin/Products");
 	}

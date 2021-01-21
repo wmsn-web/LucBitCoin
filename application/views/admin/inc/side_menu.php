@@ -54,8 +54,8 @@
               
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="<?= base_url('Admin/Products'); ?>" <?php if($uri=="Products"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
+          <li class="nav-item  has-treeview">
+            <a href="#" <?php if($uri=="Products"): echo 'class="nav-link active"'; elseif($uri=="Bases"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>
               <i class="nav-icon fas fa-cube"></i>
               <p>
                 Products
@@ -63,7 +63,21 @@
                 
               </p>
             </a>
-            
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('Admin/Products'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cards</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('Admin/Bases'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Base Name</p>
+                </a>
+              </li>
+              
+            </ul>
           </li>
           <li class="nav-item">
             <a href="<?= base_url('Admin/Withdraw-Request'); ?>" <?php if($uri=="Withdraw-Request"): echo 'class="nav-link active"'; else: echo 'class="nav-link"'; endif; ?>>

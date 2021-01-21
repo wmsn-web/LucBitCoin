@@ -13,7 +13,7 @@ class Products extends CI_Controller {
 		{
 			return redirect("Login"); 
 		}
-		$this->db->where("username",$this->session->userdata("userName"));
+		$this->db->where("username",$this->session->userdata("userName")); 
 		$checkBlock = $this->db->get("users")->row();
 		if($checkBlock->status == "0")
 		{
@@ -289,7 +289,7 @@ class Products extends CI_Controller {
 			}
 			//Update Product Status
 			$this->db->where("id",$proId);
-			$this->db->update("cards",["status"=>0]);
+			$this->db->update("cards",["status"=>0, "mtr_status"=>"saled"]);
 			echo "succ";
 
 
@@ -312,4 +312,55 @@ class Products extends CI_Controller {
 		return redirect('Products/index/Card');
 	}
 
+	public function ApplyChecker()
+	{
+		$proId = $this->input->post("proId");
+		$this->db->where("id",$proId);
+		$gt = $this->db->get("cards")->row();
+		$ccn = $gt->card_no;
+		$exp = $gt->exp;
+		$cvv = $gt->cvv;
+		$spl = explode("/", $exp);
+		$month = $spl[0];
+		$year = $spl[1];
+		//echo $ccn;
+		$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc='.$ccn.'|'.$month.'|'.$year.'|'.$cvv.'';
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+					$validds = curl_exec($ch);
+					echo $validds;
+					curl_close($ch);
+	}
+
+	function ChkerPrice()
+	{
+		$getSetting = $this->AdminModel->getSetting();
+                 $user = $this->input->post("userName");
+                 $this->db->where("username",$user);
+                 $gtUser = $this->db->get("users")->row();
+                 $cryptoSelect = $gtUser->crypto_select;
+                  if($cryptoSelect=="BTC")
+                    {
+                      $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                                            $ex = json_decode($json);  
+                                            $ccrr = $ex->bitcoin->usd;
+                                            $icn = '<i class="fab fa-btc"></i>';
+                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,8);
+                          }
+                          else
+                          {
+                            $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                                            $ex = json_decode($json);  
+                                            $ccrr = $ex->ethereum->usd;
+                                            $icn = '<i class="fab fa-ethereum"></i>';
+                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,9);
+                          }
+                $returns = array("mssg"=>"Price for checker is ".$icn." ".$prc, "chkPrc"=>$prc);
+                echo json_encode($returns);
+        //echo "Price for checker is ".$icn." ".$prc;
+
+	}
 }

@@ -35,6 +35,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
+                <h6 class="text-danger">please make sure to copy all required information, information will only stay visible for 6 months</h6>
                 <table class="tble tble-bordered" id="example1">
                   <thead>
                     <tr>
@@ -46,6 +47,8 @@
                         <th>BANK</th>
                         <th>NAME</th>
                         <th>ADDRESS</th>
+                        <th>MOBILE</th>
+                        <th>EMAIL</th>
                         <th>SELLER</th>
                         <th>BASE</th>
                         <th>$</th>
@@ -74,6 +77,8 @@
                             <td style="text-align: left; width: 10%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['bank']; ?></td>
                             <td><?= $pro['name']; ?></td>
                             <td style="text-align: left; width: 15%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['address']; ?></td>
+                            <td><?= $pro['mobile']; ?></td>
+                            <td><?= $pro['email']; ?></td>
                             <td><?= $pro['seller']; ?></td>
                             <td><?= $pro['base']; ?></td>
                             <td><i class="fas fa-dollar-sign"> <?= $pro['price']; ?><br>

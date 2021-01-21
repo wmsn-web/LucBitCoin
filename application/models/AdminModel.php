@@ -144,6 +144,9 @@ class AdminModel extends CI_model
 		{
 			$res = $get->result();
 			foreach ($res as $key) {
+				$this->db->where("basename",$key->base);
+				$gtBases = $this->db->get("bases")->row();
+				$prcnt = @$gtBases->prcnt;
 				$dt = $key->date;
 				$dts = date_create($dt);
 				$date = date_format($dts,'d-m-Y');
@@ -162,6 +165,7 @@ class AdminModel extends CI_model
 									"address"	=>$key->address,
 									"seller"	=>$key->seller,
 									"base"		=>$key->base,
+									"lives"		=>$prcnt." %",
 									"price"		=>$key->price,
 									"getSell"	=>$getSell,
 									"status"	=>$key->status,
@@ -303,6 +307,40 @@ class AdminModel extends CI_model
 		        				"date"		=>$val->date,
 		        				"id"		=>$val->id,
 		        				"user_id"	=>$gtUser->user_id
+							);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getBaseData()
+	{
+		$gtbase = $this->db->get("bases");
+		if($gtbase->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gtbase->result();
+			foreach($res as $key)
+			{
+				$this->db->where(["seller"=>$key->seller, "base"=>$key->basename]);
+				$gtAllPro = $this->db->get("cards")->num_rows();
+				$this->db->where(["seller"=>$key->seller, "base"=>$key->basename, "status"=>0, "mtr_status"=>"disb"]);
+				$gtDisbPro = $this->db->get("cards")->num_rows();
+				$this->db->where(["seller"=>$key->seller, "base"=>$key->basename, "status"=>0, "mtr_status"=>"saled"]);
+				$gtSaldPro = $this->db->get("cards")->num_rows();
+				$data[] = array
+							(
+								"id"		=>$key->id,
+								"basename"	=>$key->basename,
+								"seller"	=>$key->seller,
+								"prcnt"		=>$key->prcnt,
+								"allCrd"	=>$gtAllPro,
+								"disbPro"	=>$gtDisbPro,
+								"saledPro"	=>$gtSaldPro
 							);
 			}
 		}
