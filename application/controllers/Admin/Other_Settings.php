@@ -53,4 +53,12 @@ class Other_Settings extends CI_Controller {
 		$this->session->set_flashdata("Feed","Deposit Address Updated");
 		return redirect("Admin/Other_Settings");
 	}
+
+	public function SetRwd()
+	{
+		$chrg = $this->input->post("chrg");
+		$this->db->update("settings",["refer_reward"=>$chrg]);
+		$this->session->set_flashdata("Feed","Referal Rewards Updated");
+		return redirect("Admin/Other_Settings");
+	}
 }

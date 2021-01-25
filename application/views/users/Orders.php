@@ -36,10 +36,11 @@
             <div class="card">
               <div class="card-body">
                 <h6 class="text-danger">please make sure to copy all required information, information will only stay visible for 6 months</h6>
+                <div class="table-responsive">
                 <table class="tble tble-bordered" id="example1">
                   <thead>
                     <tr>
-                        <th>DATE</th>
+                        <th>SL</th>
                         <th>NUMBER</th>
                         <th>EXP</th>
                         <th>CVV</th>
@@ -55,9 +56,9 @@
                         
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody> 
                     <?php if(!empty($ordData)): ?>
-                      <?php foreach($ordData as $pro): $card = strtolower($pro['brand']);
+                      <?php $s = 1; foreach($ordData as $pro): $sl = $s++; $card = strtolower($pro['brand']);
                         if($pro['currency']=="btc")
                         {
                           $icn = "<i class='fab fa-btc'></i>";
@@ -68,7 +69,7 @@
                         }
                        ?>
                         <tr>
-                          <td><?= $pro['date']; ?></td>
+                          <td><?= $sl; ?></td>
                             <td><img src="<?= base_url('assets/cards/'.$card.".png"); ?>" width="25"> 
                               <?= nbs(5); ?><?= $pro['numbers']; ?></td>
                             <td><?= $pro['exp']; ?></td>
@@ -81,8 +82,8 @@
                             <td><?= $pro['email']; ?></td>
                             <td><?= $pro['seller']; ?></td>
                             <td><?= $pro['base']; ?></td>
-                            <td><i class="fas fa-dollar-sign"> <?= $pro['price']; ?><br>
-                             <span class="text-primary"> <?= $icn; ?> <?= $pro['buyPrice']; ?></span>
+                            <td><i class="fas fa-dollar-sign"></i> <?= $pro['price']; ?><br>
+                             <span class="text-primary"><?= $pro['buyPrice']; ?></span>
                             </td>
                         </tr>
                       <?php endforeach; ?>
@@ -90,6 +91,8 @@
                     
                   </tbody>
                 </table>
+                
+              </div>
               </div>
             </div>
           </div>

@@ -46,6 +46,9 @@
             <button class="btn btn-outline-primary" data-toggle="modal" data-target="#depAddr">
               Set Diposit Address
             </button>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#refAwd">
+              Set Referal Rewards %
+            </button>
             
           </div>
         </div>

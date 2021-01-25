@@ -176,3 +176,31 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+      <div class="modal fade" id="refAwd">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Set Referal Rewards %</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              
+              <form action="<?= base_url('Admin/Other_Settings/SetRwd'); ?>" method="post">
+               
+                <div class="form-group">
+                  <label>Referal Rewards (%)</label>
+                  <input type="number" name="chrg" class="form-control" required value="<?= $settings['refer_reward']; ?>">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>

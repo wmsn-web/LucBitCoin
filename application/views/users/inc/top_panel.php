@@ -32,13 +32,17 @@
             $eth = $eths;
           }
         }
-
+        
+        /*
         $json1 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                               $ex1 = json_decode($json1);  
                               $ccrr1 = $ex1->bitcoin->usd;
         $json2 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
                               $ex2 = json_decode($json2);  
                               $ccrr2 = $ex2->ethereum->usd;
+        */
+                              $ccrr1 = $getSetting['btcRate'];
+                              $ccrr2 = $getSetting['ethRate'];
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->

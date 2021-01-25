@@ -49,7 +49,7 @@ class Products extends CI_Controller {
 	{
 		$user = $this->input->post("user");
 		$this->db->where("username",$user);
-		$this->db->update("users",["crypto_select"=>"ETH"]);
+		$this->db->update("users",["crypto_select"=>"ETH"]); 
 	}
 
 	public function ChangetoBtc()
@@ -312,9 +312,12 @@ class Products extends CI_Controller {
 		return redirect('Products/index/Card');
 	}
 
-	public function ApplyChecker()
+	public function ApplyChecker() 
 	{
 		$proId = $this->input->post("proId");
+		$chkprc = $this->input->post("chkprc");
+		$user_id = $this->input->post("user_id");
+		$curency = strtolower($this->input->post("curecy"));
 		$this->db->where("id",$proId);
 		$gt = $this->db->get("cards")->row();
 		$ccn = $gt->card_no;
@@ -324,6 +327,7 @@ class Products extends CI_Controller {
 		$month = $spl[0];
 		$year = $spl[1];
 		//echo $ccn;
+
 		$url = 'https://www.bit2check.com/api/v1/api.php?user=luctshidimu1@gmail.com&pass=123456789aA@&gateway=cvv&cc='.$ccn.'|'.$month.'|'.$year.'|'.$cvv.'';
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, $url);
@@ -332,32 +336,81 @@ class Products extends CI_Controller {
 					curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 					$validds = curl_exec($ch);
 					echo $validds;
+					if($validds=="Live")
+					{
+
+					}
+					else
+					{
+						$this->db->where("id",$proId);
+						$this->db->delete("cards");
+					}
 					curl_close($ch);
+					
+			$this->db->where("id",$proId);
+			$getCard = $this->db->get("cards")->row();
+			//Get Bin Number
+			$bin = $getCard->bin;
+			$this->db->where("user_id",$user_id);
+			$gtWllU = $this->db->get("user_wallet");
+			
+			if($gtWllU->num_rows()==0)
+			{
+				$wlBalU = 0;
+			}
+			else
+			{
+				$wlBalU = $gtWllU->row()->$curency;
+			}
+			$userBalance = $wlBalU-$chkprc;
+			$transactionDataU = array
+									(
+										"user_id"			=>$user_id,
+										"notes"				=>"Bin- (".$bin.") Checked by Checker",
+										"currency"			=>$curency,
+										"debit"				=>$chkprc,
+										"date"				=>date('Y-m-d')
+									);
+			$userWalletUser =  array
+									(
+										"user_id"			=>$user_id,
+										$curency			=>$userBalance
+									);
+			$this->db->insert("transaction",$transactionDataU);
+			if($gtWllU->num_rows()==0)
+			{
+				$this->db->insert("user_wallet",$userWalletUser);
+			}
+			else
+			{
+				$this->db->where("user_id",$user_id);
+				$this->db->update("user_wallet",$userWalletUser);
+			}
+
+			
 	}
 
 	function ChkerPrice()
 	{
-		$getSetting = $this->AdminModel->getSetting();
+	  $getSetting = $this->AdminModel->getSetting();
+      $ccrr1 = $getSetting['btcRate'];
+      $ccrr2 = $getSetting['ethRate'];
                  $user = $this->input->post("userName");
                  $this->db->where("username",$user);
                  $gtUser = $this->db->get("users")->row();
                  $cryptoSelect = $gtUser->crypto_select;
                   if($cryptoSelect=="BTC")
                     {
-                      $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                                            $ex = json_decode($json);  
-                                            $ccrr = $ex->bitcoin->usd;
-                                            $icn = '<i class="fab fa-btc"></i>';
-                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,8);
-                          }
-                          else
-                          {
-                            $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-                                            $ex = json_decode($json);  
-                                            $ccrr = $ex->ethereum->usd;
-                                            $icn = '<i class="fab fa-ethereum"></i>';
-                                            $prc = number_format($getSetting['checker_price_btc'] / $ccrr,9);
-                          }
+                      
+                        $icn = '<i class="fab fa-btc"></i>';
+                        $prc = number_format($getSetting['checker_price_btc'] / $ccrr1,8);
+                  }
+                  else
+                  {
+                            
+                        $icn = '<i class="fab fa-ethereum"></i>';
+                        $prc = number_format($getSetting['checker_price_btc'] / $ccrr2,9);
+                   }
                 $returns = array("mssg"=>"Price for checker is ".$icn." ".$prc, "chkPrc"=>$prc);
                 echo json_encode($returns);
         //echo "Price for checker is ".$icn." ".$prc;

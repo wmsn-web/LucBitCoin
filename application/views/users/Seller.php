@@ -230,7 +230,7 @@
                           <?php endforeach; ?>
                         <?php endif; ?>
                          
-                       </tbody>
+                       </tbody> 
                        
                      </table>
                   </div>

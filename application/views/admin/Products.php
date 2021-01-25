@@ -59,20 +59,22 @@
                         <?php $s =1; foreach($proData as $pro):  $card = strtolower($pro['brand']); $sl = $s++; ?>
                       <?php
                           $getSetting = $this->AdminModel->getSetting();
-                            $endpoint = 'live';
-                            $access_key = '70d19982004ef8aa2c639ae10d4c06af';
+                          $ccrr1 = $getSetting['btcRate'];
+                          $ccrr2 = $getSetting['ethRate'];
+                            //$endpoint = 'live';
+                            //$access_key = '70d19982004ef8aa2c639ae10d4c06af';
                             //$access_key = '336afadbf57caf193b6e4bb89da64dec';
                             
                               $icn = "<i class='fab fa-btc'></i>";
                               $icn2 = "<i class='fab fa-ethereum'></i>";
-                              
+                              /*
                               $json1 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                               $ex1 = json_decode($json1);  
                               $ccrr1 = $ex1->bitcoin->usd;
                               $json2 = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
                               $ex2 = json_decode($json2);  
                               $ccrr2 = $ex2->ethereum->usd;
-                              
+                              */
                               $cryps = $pro['price'] / $ccrr1;
                               $cryp = number_format($cryps,8);
                               

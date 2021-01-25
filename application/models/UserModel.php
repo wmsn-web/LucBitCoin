@@ -208,7 +208,7 @@ class UserModel extends CI_model
 	{
 		$this->db->where("username",$user);
 		$users = $this->db->get("users")->row();
-
+		$this->db->order_by("id","DESC");
 		$this->db->where("user_id",$users->user_id);
 		$gtOrd = $this->db->get("orders");
 		if($gtOrd->num_rows()==0)
@@ -361,11 +361,12 @@ class UserModel extends CI_model
 					$st2 = 100/$getCrdNumAll;
 					$lives = number_format($st2*$getCrdlive,2);
 				}
+
 				$data[] = array
 							(
 								"base"	=>$bs->basename,
 								"sold"=>$sold_percent. " %",
-								"live"=>@$lives." %"
+								"live"=>$bs->prcnt." %"
 							);
 			}
 		}

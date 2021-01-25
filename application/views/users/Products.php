@@ -27,7 +27,25 @@
         </div>
     </div>
     <!-- /.content-header -->
-
+<?php $getSetting = $this->AdminModel->getSetting();
+      $ccrr1 = $getSetting['btcRate'];
+      $ccrr2 = $getSetting['ethRate'];
+      $this->db->where("username",$user);
+     $gtUser = $this->db->get("users")->row();
+     $cryptoSelect = $gtUser->crypto_select;
+      if($cryptoSelect=="BTC")
+        {
+          
+            $icn = '<i class="fab fa-btc"></i>';
+            $prc = number_format($getSetting['checker_price_btc'] / $ccrr1,8);
+      }
+      else
+      {
+                
+            $icn = '<i class="fab fa-ethereum"></i>';
+            $prc = number_format($getSetting['checker_price_btc'] / $ccrr2,9);
+       }
+   ?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -35,15 +53,18 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
+                <p class="text-danger">when purchasing please wait while the lead goes through the checker after pressing “BUY”</p>
                 <div class="table-responsive">
                   <label>checking mode :</label>
                   <select id="sqMode" class="smallInput">
                     <option value="">Select</option>
                     <option value="no">None</option>
-                    <option value="auto">Buy with checker</option>
+                    <option selected value="auto">Buy with checker</option>
                   </select><br>
-                  <input type="hidden" id="chkprc" >
-                  <span id="checkerMsg" class="text-danger"></span>
+                  <input type="hidden" id="chkprc" value="<?= $prc; ?>" >
+                  <span id="checkerMsg" class="text-danger">
+                    Price for checker is <?= $icn. " ".$prc; ?>
+                  </span>
                   <table  id="example5" class="tble tble-bordered">
                     <thead>
                       <tr>
@@ -67,10 +88,10 @@
                       if(!empty($proData)): ?>
                         <?php $s =1; foreach($proData as $pro):  $card = strtolower($pro['brand']); $sl = $s++; ?>
                           <?php
-                          $cryp = "";
-                          $icn = "";
-                          /*
-                          $getSetting = $this->AdminModel->getSetting();
+                          //$cryp = "";
+                          //$icn = "";
+                         
+                          
                           
                             $endpoint = 'live';
                             $access_key = '70d19982004ef8aa2c639ae10d4c06af';
@@ -81,27 +102,27 @@
                             if($row->crypto_select =="BTC")
                             {
                               $icn = "<i class='fab fa-btc'></i>";
-                              
+                              /*
                               $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                               $ex = json_decode($json);  
                               $ccrr = $ex->bitcoin->usd;
-                              
-                              $cryps = $pro['price'] / $ccrr;
+                              */
+                              $cryps = $pro['price'] / $ccrr1;
                               $cryp = number_format($cryps,8);
                             }
                             else
                             {
                               $icn = "<i class='fab fa-ethereum'></i>"; 
-                              
+                              /*
                               $json = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
                               $ex = json_decode($json);  
                               $ccrr = $ex->ethereum->usd;
-                              
-                              $cryps = $pro['price'] / $ccrr;
+                              */
+                              $cryps = $pro['price'] / $ccrr2;
                               $cryp = number_format($cryps,9);
 
                             }
-                            */
+                            
                             if($pro['cvv']=="")
                             {
                               $cvvs = "<i class='fas fa-close text-danger'></i>";
@@ -120,9 +141,25 @@
                               <?= nbs(5); ?><?= $pro['bin']; ?></td>
                             <td><?= $pro['exp']; ?></td>
                             <td><?= $cvvs; ?></td>
-                            <td><?= $pro['type']; ?></td>
+                            <td><?= strtoupper($card." ".$pro['type']); ?></td>
                             <td style="text-align: left; width: 10%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['bank']; ?></td>
-                            <td style="text-align: left; width: 20%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span> <?= $pro['address']; ?></td>
+                            <td style="text-align: left; width: 20%"><span class="flag-icon flag-icon-<?= $pro['cntr_cd']; ?>"></span>
+                             <?php 
+                              $adr = $pro['address'];
+                              $len = strlen($adr);
+                              $lln = $len-25;
+                              echo substr($adr,0,5); 
+                              for ($i=0; $i < 10; $i++) { 
+                                    
+                                          $sttrs = "*";
+                                          
+                                  echo $sttrs;
+                                      
+                                      }
+                                  echo substr($adr,-6);
+
+                              ?>
+                           </td>
                             <td><?= $pro['seller']; ?></td>
                             <td><?= $pro['base']; ?></td>
                             <td><?= $pro['lives']; ?></td>
@@ -134,7 +171,7 @@
                                 <button  data-toggle="modal" data-target="#chPrice" class="btnSmall" onclick="chpricee('<?= $pro['id']; ?>_<?= $pro['price']; ?>')">Change Price</button>
                                 <?php else: ?>
                                 <div id="mssg_<?= $sl; ?>">
-                                  <!--button onclick="buys('<?= $row->crypto_select; ?>_<?= $cryp; ?>_<?= $row->user_id; ?>_<?= $sl; ?>_<?= $pro['id']; ?>')" class="btnSmall">Buy Card</button-->
+                                  <button onclick="buys('<?= $row->crypto_select; ?>_<?= $cryp; ?>_<?= $row->user_id; ?>_<?= $sl; ?>_<?= $pro['id']; ?>')" class="btnSmall">Buy Card</button>
                                 </div>
                               <?php endif; ?>
                             </td>
@@ -214,6 +251,7 @@
         else
         {
           $("#chkprc").val("0");
+          $("#checkerMsg").html("");
         }
      });
     });
@@ -248,11 +286,11 @@
             {
               if(chkMode == "auto")
               {
-                var appl = applyChecker(proId);
+                //var appl = applyChecker(proId);
                 
                 
                 $.post("<?= base_url('Products/ApplyChecker'); ?>",
-                  {proId: proId},
+                  {proId: proId, chkprc: chkprc, user_id: spl[2],curecy: curecy,},
                    function(responses)
                    {
                     if(responses=="Live")
@@ -281,7 +319,8 @@
                     }
                     else
                     {
-                      $("#mssg_"+sl).html("<b class='text-danger'>"+responses+"</b>")
+                      alert("You have successfully checked card. The Card is Dead. "+chkprc+" "+curecy+" has been deducted from your wallet.");
+                      $("#mssg_"+sl).html("<b class='text-danger'>Card is dead</b>")
                     }
                    }
                    )

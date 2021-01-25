@@ -31,3 +31,58 @@
 <script src="<?= base_url('assets/'); ?>dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url('assets/'); ?>dist/js/demo.js"></script>
+<script type="text/javascript">
+  getNoticeRequest();
+  getNoticeWd();
+  function getNoticeRequest()
+  {
+    setInterval(function(){
+      $.post("<?= base_url('Admin/Dashboard/getNotice'); ?>",
+      {
+        gtNtc: "gtNtc"
+      },
+      function(data)
+      {
+        //alert(data);
+        if(data=="0")
+        {
+          $("#rqNotice").html("");
+          $("#rqNotice").removeClass("badge badge-danger");
+        }
+        else
+        {
+          $("#rqNotice").html(data);
+          $("#rqNotice").addClass("badge badge-danger");
+        }
+      }
+      )
+      
+    }, 1000);
+  }
+
+  function getNoticeWd()
+  {
+    setInterval(function(){
+      $.post("<?= base_url('Admin/Dashboard/getWdNotice'); ?>",
+      {
+        gtNtc: "gtNtc"
+      },
+      function(data)
+      {
+        //alert(data);
+        if(data=="0")
+        {
+          $("#wdNotice").html("");
+          $("#wdNotice").removeClass("badge badge-danger");
+        }
+        else
+        {
+          $("#wdNotice").html(data);
+          $("#wdNotice").addClass("badge badge-danger");
+        }
+      }
+      )
+      
+    }, 1000);
+  }
+</script>

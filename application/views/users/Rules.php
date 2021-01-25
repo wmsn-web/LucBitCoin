@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <h4>Rules</h4>
-                    <small><i class="fa fa-caret-down" aria-hidden="true"></i> Follow them or GTFO!</small>
+                    
                 </div>
                 <div class="col-md-5">
                     <div class="sm-right">

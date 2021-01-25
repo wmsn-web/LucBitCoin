@@ -149,7 +149,7 @@
                               $("#lodmsg").html("Successfully Signup. Please Wait...");
                               setTimeout(function () {
                                 window.location.href = "<?= base_url(); ?>";
-                              }, 5000);
+                              }, 2000);
                           }
                           else if(resposne == "inv")
                           {
@@ -204,7 +204,7 @@
                               $("#lodmsg").html("Successfully Loggedin. Please Wait...");
                               setTimeout(function () {
                                 window.location.href = "<?= base_url(); ?>";
-                              }, 5000);
+                              }, 2000);
                           }
                           else if(resposne == "invPs")
                           {

@@ -26,5 +26,20 @@ class Dashboard extends CI_Controller {
 		$this->session->unset_userdata("adminUser");
 		return redirect("Admin/Login");
 	}
+
+	public function getNotice()
+	{
+		$this->db->where("status","0");
+		$gt = $this->db->get("fund_request")->num_rows();
+		echo $gt;
+	}
+
+	public function getWdNotice()
+	{
+		$this->db->where("status","0");
+		$gt = $this->db->get("withdraw_request")->num_rows();
+		echo $gt;
+		
+	}
 }
 
